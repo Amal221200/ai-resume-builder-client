@@ -1,31 +1,34 @@
 "use client"
-import React, { use, useCallback, useState } from 'react'
+import React, { use, useCallback, useEffect, useState } from 'react'
 import PersonalDetailForm from './forms/PersonalDetailForm';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, FullscreenIcon, LayoutGrid } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import SummaryDetailForm from './forms/SummaryDetailForm';
 import dynamic from 'next/dynamic';
-import { EditReviewContext, TEditorReviewContext } from './providers/EditReviewProvider';
-
 
 const PreviewModal = dynamic(() => import('./modal/PreviewModal'), { ssr: false });
 
 const FormSection = () => {
-    const { resumeInfo } = use(EditReviewContext) as TEditorReviewContext
-    const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step-${resumeInfo.id}`) ?? '1'))
+    const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step`) ?? '1'))
     const [openPreviewModal, setOpenPreviewModal] = useState(false)
     const [enableNext, setEnableNext] = useState(true)
 
     const onNext = useCallback(() => {
         setActiveForm((current) => current + 1)
-        localStorage.setItem(`step-${resumeInfo.id}`, (activeForm + 1).toString())
-    }, [activeForm, resumeInfo])
-    
+        localStorage.setItem(`step`, (activeForm + 1).toString())
+    }, [activeForm])
+
     const onPrevious = useCallback(() => {
         setActiveForm((current) => current - 1)
-        localStorage.setItem(`step-${resumeInfo.id}`, (activeForm - 1).toString())
-    }, [activeForm, resumeInfo])
+        localStorage.setItem(`step`, (activeForm - 1).toString())
+    }, [activeForm])
+
+    useEffect(() => {
+        return () => {
+            localStorage.removeItem('step')
+        }
+    }, [])
     return (
         <div>
             <div className='flex items-center justify-between'>
