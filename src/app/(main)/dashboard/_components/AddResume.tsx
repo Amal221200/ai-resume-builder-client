@@ -35,7 +35,7 @@ const AddResume = () => {
         }
         setOpen(false)
         setResumeTitle('')
-        router.push(`/dashboard/resume/${response.attributes.resumeId}/edit`)
+        router.push(`/dashboard/resume/${response.id}/edit`)
         toast.success('Successfully created')
     }, [resumeTitle, router])
 

@@ -34,13 +34,30 @@ export async function getResume(resumeId: string): Promise<TResume | undefined> 
         if (!user) {
             redirect('/auth/sign-in')
         }
-        const email = user.emailAddresses[0].emailAddress
 
-        const response = await axiosClient.get(`${ENDPOINT}?filters[user_email][$eq]=${email}&filters[resumeId][$eq]=${resumeId}`)
-        return response.data.data[0]
+        const response = await axiosClient.get(`${ENDPOINT}/${resumeId}`)
+        return response.data.data
     } catch (error) {
         console.log(error);
+    }
+}
 
+export async function updateResume(resume: TResume): Promise<TResume | undefined> {
+    try {
+        const user = await currentUser()
+
+        if (!user) {
+            redirect('/auth/sign-in')
+        }
+
+        const response = await axiosClient.put(`${ENDPOINT}/${resume.id}`, {
+            data: { ...resume.attributes }
+        })
+
+        revalidatePath(`/dashboard/resume/${resume.attributes.resumeId}/edit`)
+        return response.data.data
+    } catch (error) {
+        console.log(error);
     }
 }
 

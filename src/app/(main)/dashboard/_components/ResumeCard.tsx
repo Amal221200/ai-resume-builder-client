@@ -5,7 +5,7 @@ import React from 'react'
 
 const ResumeCard = ({ resume }: { resume: TResume }) => {
     return (
-        <Link href={`/dashboard/resume/${resume.attributes.resumeId}/edit`}>
+        <Link href={`/dashboard/resume/${resume.id}/edit`}>
             <div className='flex h-[280px] items-center justify-center rounded-lg border border-primary-btn bg-secondary p-14 shadow-primary-btn transition-all hover:scale-105 hover:shadow-md'>
                 <Notebook />
             </div>
