@@ -30,7 +30,7 @@ const FormSection = () => {
         }
     }, [])
     return (
-        <div>
+        <div className='no-scrollbar h-[85vh] overflow-auto'>
             <div className='flex items-center justify-between'>
                 <Button variant="outline" className='flex gap-2'>
                     <LayoutGrid /> Theme

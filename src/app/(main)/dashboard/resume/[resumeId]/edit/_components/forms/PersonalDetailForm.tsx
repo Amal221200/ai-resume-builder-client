@@ -1,12 +1,12 @@
 "use client";
 
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React, { FormEvent, use, useCallback, useId, useState } from 'react'
 import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
 import { updateResume } from '@/lib/actions/resume';
-import { Loader2 } from 'lucide-react';
+// import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import LoadingButton from '@/components/buttons/LoadingButton';
 
 const PersonalDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
@@ -65,9 +65,9 @@ const PersonalDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void
                     </div>
                 </div>
                 <div className='mt-3 flex justify-end'>
-                    <Button disabled={loading} type='submit' variant="btn">
-                        {loading ? <Loader2 className='animate-spin' /> : "Save"}
-                    </Button>
+                    <LoadingButton loading={loading} type='submit'>
+                        Save
+                    </LoadingButton>
                 </div>
             </form>
         </div>

@@ -1,21 +1,39 @@
 "use client";
-import { Button } from '@/components/ui/button';
 import React, { ChangeEvent, FormEvent, use, useCallback, useId, useState } from 'react'
 import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
 import { updateResume } from '@/lib/actions/resume';
-import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
+import AIButton from '@/components/buttons/AIButton';
+import LoadingButton from '@/components/buttons/LoadingButton';
+import { generateAIResponse } from '@/lib/actions/gemini_ai';
+
+const PROMPT = `Job Title: {jobTitle}, Depends on job title give me list of summary for 3 experience level:- Senior Level, Mid Level and Freasher level in 3-4 lines in array format, with summary and experience_level Field in JSON Format`
 
 const SummaryDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
-    const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const summary = useId()
+    
+    const [loading, setLoading] = useState(false)
+    const [generating, setGenerating] = useState(false)
+    const [aiGeneratedSummaryList, setAiGeneratedSummaryList] = useState<Array<{ experience_level: number, summary: string }>>([])
+    
+    
+    const handleInput = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, [e.currentTarget.name]: e.currentTarget.value } })
         enableNext(false)
-    }
+    }, [resumeInfo, setResumeInfo, enableNext])
 
-    const [loading, setLoading] = useState(false)
-    const summary = useId()
+    const onGenerateAISummary = useCallback(async () => {
+        console.log('NOAs');
+        
+        setGenerating(true)
+        const response = await generateAIResponse(PROMPT.replace('{jobTitle}', resumeInfo.attributes.jobTitle ?? ""))
+        console.log(response);
+        
+        setAiGeneratedSummaryList(JSON.parse(response))
+        setGenerating(false)
+    }, [resumeInfo])
 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -31,18 +49,37 @@ const SummaryDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void 
             <h2 className='text-lg font-bold'>Summary Detail</h2>
             <p>Tell something about yourself, your passion, and your objective in breif.</p>
             <form onSubmit={onSubmit}>
-                <div className='mt-5 grid grid-cols-2 gap-3'>
-                    <div className='col-span-2 space-y-2'>
-                        <label className='text-sm' htmlFor={summary}>Summary</label>
-                        <Textarea rows={6} placeholder='Summary' id={summary} required name='summary' defaultValue={resumeInfo.attributes?.summary ?? ''} onChange={handleInput} />
+                <div className='mt-5'>
+                    <div className='space-y-2'>
+                        <div className='flex items-end justify-between'>
+                            <label className='text-sm' htmlFor={summary}>Summary</label>
+                            <AIButton disabled={generating} onClick={onGenerateAISummary}>
+                                Generate from AI
+                            </AIButton>
+                        </div>
+                        <Textarea rows={6} placeholder='Summary' id={summary} required name='summary' value={resumeInfo.attributes?.summary ?? ''} onChange={handleInput} />
                     </div>
                 </div>
                 <div className='mt-3 flex justify-end'>
-                    <Button disabled={loading} type='submit' variant="btn">
-                        {loading ? <Loader2 className='animate-spin' /> : "Save"}
-                    </Button>
+                    <LoadingButton disabled={generating} loading={loading} type='submit'>
+                        Save
+                    </LoadingButton>
                 </div>
             </form>
+
+            {
+                !!aiGeneratedSummaryList.length && <div className='my-5'>
+                    <h2 className='text-lg font-bold'>Suggestions</h2>
+                    {aiGeneratedSummaryList?.map((item, index) => (
+                        <div key={index}
+                            onClick={() => setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, summary: item?.summary } })}
+                            className='my-4 cursor-pointer rounded-lg p-5 shadow-lg transition-all hover:bg-foreground/10'>
+                            <h2 className='my-1 font-bold text-primary'>Level: {item?.experience_level}</h2>
+                            <p>{item?.summary}</p>
+                        </div>
+                    ))}
+                </div>
+            }
         </div>
     )
 }
