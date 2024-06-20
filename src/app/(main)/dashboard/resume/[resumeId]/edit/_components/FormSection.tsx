@@ -1,10 +1,11 @@
 "use client"
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState,use } from 'react'
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, FullscreenIcon, HomeIcon, LayoutGrid } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
+import { EditResumeContext, TEditResumeContext } from './providers/EditResumeProvider';
 
 const PersonalDetailForm = dynamic(() => import('./forms/PersonalDetailForm'), { ssr: true });
 const SummaryDetailForm = dynamic(() => import('./forms/SummaryDetailForm'), { ssr: true });
@@ -14,6 +15,7 @@ const SkillsDetail = dynamic(() => import('./forms/SkillsDetail'), { ssr: true }
 const PreviewModal = dynamic(() => import('./modal/PreviewModal'), { ssr: false });
 
 const FormSection = () => {
+    const {resumeInfo} = use(EditResumeContext) as TEditResumeContext
     const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step`) ?? '1'))
     const [openPreviewModal, setOpenPreviewModal] = useState(false)
     const [enableNav, setEnableNav] = useState(true)
@@ -46,7 +48,7 @@ const FormSection = () => {
                         <LayoutGrid /> Theme
                     </Button>
                     <Button asChild variant={"btn"}>
-                        <Link href="/dashboard/resume" className='flex gap-2'>
+                        <Link href={`/dashboard/resume/${resumeInfo.id}/view`} className='flex gap-2'>
                             <HomeIcon /> View
                         </Link>
                     </Button>

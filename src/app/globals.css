@@ -18,11 +18,27 @@
   #no-print {
     display: none;
   }
+  * {
+    @apply shadow-none shadow-white dark:shadow-white;
+  }
+
+  html {
+    color-scheme: light;
+    background: white;
+  }
+
+  body {
+    background-color: white;
+  }
 
   #print {
     display: block;
     background: initial;
-    @apply max-w-none shadow-none;
+    @apply max-w-none;
+  }
+
+  .print-remove-shadow {
+    @apply shadow-none;
   }
 
   body {
