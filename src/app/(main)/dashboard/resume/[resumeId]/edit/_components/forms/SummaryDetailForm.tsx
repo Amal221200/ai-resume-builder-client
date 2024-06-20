@@ -6,31 +6,27 @@ import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
 import AIButton from '@/components/buttons/AIButton';
 import LoadingButton from '@/components/buttons/LoadingButton';
-import { generateAIResponse } from '@/lib/actions/gemini_ai';
+import { generateAISummary } from '@/lib/actions/gemini_ai';
 
 const PROMPT = `Job Title: {jobTitle}, Depends on job title give me list of summary for 3 experience level:- Senior Level, Mid Level and Freasher level in 3-4 lines in array format, with summary and experience_level Field in JSON Format`
 
-const SummaryDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void }) => {
+const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
     const summary = useId()
-    
+
     const [loading, setLoading] = useState(false)
     const [generating, setGenerating] = useState(false)
     const [aiGeneratedSummaryList, setAiGeneratedSummaryList] = useState<Array<{ experience_level: number, summary: string }>>([])
-    
-    
+
+
     const handleInput = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
         setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, [e.currentTarget.name]: e.currentTarget.value } })
-        enableNext(false)
-    }, [resumeInfo, setResumeInfo, enableNext])
+        enableNav(false)
+    }, [resumeInfo, setResumeInfo, enableNav])
 
     const onGenerateAISummary = useCallback(async () => {
-        console.log('NOAs');
-        
         setGenerating(true)
-        const response = await generateAIResponse(PROMPT.replace('{jobTitle}', resumeInfo.attributes.jobTitle ?? ""))
-        console.log(response);
-        
+        const response = await generateAISummary(PROMPT.replace('{jobTitle}', resumeInfo.attributes.jobTitle ?? ""))
         setAiGeneratedSummaryList(JSON.parse(response))
         setGenerating(false)
     }, [resumeInfo])
@@ -38,11 +34,16 @@ const SummaryDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        await updateResume(resumeInfo);
-        enableNext(true)
-        setLoading(false)
-        toast.success("Successfully updated summary.")
-    }, [enableNext, resumeInfo])
+        try {
+            await updateResume(resumeInfo);
+            toast.success("Successfully updated summary.")
+        } catch (error) {
+            toast.error("Error updating summary.")
+        } finally {
+            enableNav(true)
+            setLoading(false)
+        }
+    }, [enableNav, resumeInfo])
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>

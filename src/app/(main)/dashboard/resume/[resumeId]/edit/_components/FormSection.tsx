@@ -6,13 +6,16 @@ import { ArrowLeft, ArrowRight, FullscreenIcon, LayoutGrid } from 'lucide-react'
 import { cn } from '@/lib/utils';
 import SummaryDetailForm from './forms/SummaryDetailForm';
 import dynamic from 'next/dynamic';
+import ExperienceDetailForm from './forms/ExperienceDetailForm';
+import EducationDetailForm from './forms/EducationDetailForm';
+import SkillsDetail from './forms/SkillsDetail';
 
 const PreviewModal = dynamic(() => import('./modal/PreviewModal'), { ssr: false });
 
 const FormSection = () => {
     const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step`) ?? '1'))
     const [openPreviewModal, setOpenPreviewModal] = useState(false)
-    const [enableNext, setEnableNext] = useState(true)
+    const [enableNav, setEnableNav] = useState(true)
 
     const onNext = useCallback(() => {
         setActiveForm((current) => current + 1)
@@ -38,11 +41,11 @@ const FormSection = () => {
                 <div className='flex gap-x-3'>
                     <div className='flex gap-x-3'>
                         <Button onClick={onPrevious} size="sm"
-                            className={cn(activeForm === 1 ? "hidden" : 'inline')} disabled={!enableNext}>
+                            className={cn(activeForm === 1 ? "hidden" : 'inline')} disabled={!enableNav}>
                             <ArrowLeft />
                         </Button>
                         <Button onClick={onNext}
-                            className={cn('flex gap-2')} disabled={activeForm === 5 || !enableNext} size={'sm'}>
+                            className={cn('flex gap-2')} disabled={activeForm === 5 || !enableNav} size={'sm'}>
                             Next <ArrowRight />
                         </Button>
                     </div>
@@ -53,10 +56,19 @@ const FormSection = () => {
                 </div>
             </div>
             {
-                activeForm === 1 && <PersonalDetailForm enableNext={(val) => setEnableNext(val)} />
+                activeForm === 1 && <PersonalDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 2 && <SummaryDetailForm enableNext={(val) => setEnableNext(val)} />
+                activeForm === 2 && <SummaryDetailForm enableNav={(val) => setEnableNav(val)} />
+            }
+            {
+                activeForm === 3 && <ExperienceDetailForm enableNav={(val) => setEnableNav(val)} />
+            }
+            {
+                activeForm === 4 && <EducationDetailForm enableNav={(val) => setEnableNav(val)} />
+            }
+            {
+                activeForm === 5 && <SkillsDetail enableNav={(val) => setEnableNav(val)} />
             }
 
             <PreviewModal open={openPreviewModal} onClose={() => setOpenPreviewModal(false)} />

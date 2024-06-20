@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { use } from 'react';
 import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
 
-const SkillsPreview = ({  }: { }) => {
+const SkillsPreview = ({ }: {}) => {
   const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
 
   return (
@@ -19,7 +19,7 @@ const SkillsPreview = ({  }: { }) => {
             <div key={index} className='flex items-center justify-between'>
               <h6 className='text-xs'>{skill.name}</h6>
               <div className='h-2 w-[120px] bg-gray-200' >
-                <div className='h-2' style={{ backgroundColor: resumeInfo.attributes.themeColor, width: `${skill.rating}%` }} />
+                <div className='h-2' style={{ backgroundColor: resumeInfo.attributes.themeColor, width: `${skill.rating * 20}%` }} />
               </div>
             </div>
           ))

@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.rsw-ce ul, .experience-work-summary ul {
+  list-style: disc;
+  padding-left: 2em;
+}
+
+.rsw-ce ol, .experience-work-summary ol {
+  list-style: decimal;
+  padding-left: 2em;
+}
+
 @layer base {
   .no-scrollbar::-webkit-scrollbar {
     display: none;

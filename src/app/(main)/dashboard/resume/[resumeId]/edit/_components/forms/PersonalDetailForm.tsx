@@ -4,15 +4,14 @@ import { Input } from '@/components/ui/input';
 import React, { FormEvent, use, useCallback, useId, useState } from 'react'
 import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
 import { updateResume } from '@/lib/actions/resume';
-// import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import LoadingButton from '@/components/buttons/LoadingButton';
 
-const PersonalDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void }) => {
+const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
     const handleInput = (e: FormEvent<HTMLInputElement>) => {
         setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, [e.currentTarget.name]: e.currentTarget.value } })
-        enableNext(false)
+        enableNav(false)
     }
 
     const [loading, setLoading] = useState(false)
@@ -25,13 +24,18 @@ const PersonalDetailForm = ({ enableNext }: { enableNext: (val: boolean) => void
     const email = useId()
 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        setLoading(true)
-        await updateResume(resumeInfo);
-        enableNext(true)
-        setLoading(false)
-        toast.success("Successfully updated personal information.")
-    }, [enableNext, resumeInfo])
+        try {
+            e.preventDefault()
+            setLoading(true)
+            await updateResume(resumeInfo);
+            toast.success("Successfully updated personal information.")
+        } catch (error) {
+            toast.error("Error updating personal information.")
+        } finally {
+            enableNav(true)
+            setLoading(false)
+        }
+    }, [enableNav, resumeInfo])
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>

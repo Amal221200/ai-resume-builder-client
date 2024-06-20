@@ -9,7 +9,7 @@ const PreviewSection = dynamic(() => import('./_components/PreviewSection'), { s
 
 const EditResumePage = async ({ params: { resumeId } }: { params: { resumeId: string } }) => {
     const resume = await getResume(resumeId);
-
+    
     if (!resume) {
         return
     }

@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { use } from 'react';
 import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
 
-const ExperiencePreview = ({  }: { }) => {
+const ExperiencePreview = ({ }: {}) => {
   const { resumeInfo } = use(EditReviewContext) as TEditorReviewContext;
 
   return (
@@ -19,14 +19,13 @@ const ExperiencePreview = ({  }: { }) => {
           <div key={index} className='my-5'>
             <h6 style={{ color: resumeInfo.attributes?.themeColor }} className='text-sm font-bold'>{experience.title}</h6>
             <p className='flex justify-between text-sm'>
-              {experience.companyName}, {experience.city}, {experience.state}
+              {experience.companyName}{(experience.companyName && experience.city) && `,`} {experience.city}{experience.city && experience.state && `,`} {experience.state}
               <span>
-                {experience.startDate} - {experience.currentlyWorking ? "Present" : experience.endDate}
+                {experience.startDate} {((experience.currentlyWorking) || experience.endDate) && "-"} {experience.currentlyWorking ? "Present" : experience.endDate}
               </span>
             </p>
-            <p className='my-2 text-sm'>
-              {experience.workSummary}
-            </p>
+            
+            <div className='experience-work-summary my-2 text-sm' dangerouslySetInnerHTML={{ __html: experience.workSummary }} />
           </div>
         ))
       }

@@ -17,14 +17,22 @@ const generationConfig = {
     topP: 0.95,
     topK: 64,
     maxOutputTokens: 8192,
-    responseMimeType: "application/json",
 };
 
-export async function generateAIResponse(prompt: string) {
+export async function generateAIWorkSummary(prompt: string) {
     const chatSession = model.startChat({
-        generationConfig,
-        // safetySettings: Adjust safety settings
-        // See https://ai.google.dev/gemini-api/docs/safety-settings
+        generationConfig: { ...generationConfig, responseMimeType: 'text/plain' },
+        history: [
+        ],
+    });
+
+    const result = await chatSession.sendMessage(prompt);
+
+    return result.response.text()
+}
+export async function generateAISummary(prompt: string) {
+    const chatSession = model.startChat({
+        generationConfig: { ...generationConfig, responseMimeType: 'text/json' },
         history: [
         ],
     });

@@ -35,7 +35,7 @@ export async function getResume(resumeId: string): Promise<TResume | undefined> 
             redirect('/auth/sign-in')
         }
 
-        const response = await axiosClient.get(`${ENDPOINT}/${resumeId}`)
+        const response = await axiosClient.get(`${ENDPOINT}/${resumeId}?populate=*`)
         return response.data.data
     } catch (error) {
         console.log(error);
@@ -49,6 +49,7 @@ export async function updateResume(resume: TResume): Promise<TResume | undefined
         if (!user) {
             redirect('/auth/sign-in')
         }
+        // console.log(resume);
 
         const response = await axiosClient.put(`${ENDPOINT}/${resume.id}`, {
             data: { ...resume.attributes }

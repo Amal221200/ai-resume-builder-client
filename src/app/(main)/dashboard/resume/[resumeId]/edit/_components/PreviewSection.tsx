@@ -17,9 +17,9 @@ const PreviewSection = ({ className }: { className?: string }) => {
             style={{ borderColor: resumeInfo.attributes?.themeColor }}>
             {resumeInfo.attributes.firstName && <PersonalDetailPreview />}
             {resumeInfo.attributes.summary && <SummaryPreview />}
-            {resumeInfo.attributes.experience && <ExperiencePreview />}
-            {resumeInfo.attributes.education && <EducationPreview />}
-            {resumeInfo.attributes.skills && <SkillsPreview />}
+            {!!resumeInfo.attributes.experience?.length && <ExperiencePreview />}
+            {!!resumeInfo.attributes.education?.length && <EducationPreview />}
+            {!!resumeInfo.attributes.skills?.length && <SkillsPreview />}
         </div>
     )
 }

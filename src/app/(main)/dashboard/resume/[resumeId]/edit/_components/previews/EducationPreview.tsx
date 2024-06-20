@@ -3,7 +3,7 @@ import { Separator } from '@/components/ui/separator'
 import { use } from 'react';
 import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
 
-const EducationPreview = ({  }: {  }) => {
+const EducationPreview = ({ }: {}) => {
   const { resumeInfo } = use(EditReviewContext) as TEditorReviewContext;
 
   return (
@@ -19,8 +19,8 @@ const EducationPreview = ({  }: {  }) => {
           <div key={index} className='my-5'>
             <h6 style={{ color: resumeInfo.attributes?.themeColor }} className='text-sm font-bold'>{education.universityName}</h6>
             <p className='flex justify-between text-sm'>
-              {education.degree} in {education.major}
-              <span >{education.startDate} - {education?.currentlyStudying ? "Present" : education.endDate}</span>
+              {education.degree} {(education.degree && education.major) && "in"} {education.major}
+              <span >{education.startDate} {(education?.currentlyStudying || education?.endDate) && "-"} {education?.currentlyStudying ? "Present" : education.endDate}</span>
             </p>
             <p className='my-2 text-sm'>
               {education.description}
