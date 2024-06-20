@@ -1,10 +1,10 @@
 "use client"
 import { Separator } from "@/components/ui/separator"
 import { use } from "react";
-import { EditReviewContext, TEditorReviewContext } from "../providers/EditReviewProvider";
+import { EditResumeContext, TEditResumeContext } from "../providers/EditResumeProvider";
 
 const PersonalDetailPreview = ({  }: {  }) => {
-    const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
+    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
 
     return (
         <div className="">

@@ -6,7 +6,7 @@ const PreviewModal = ({ open, onClose }: { open: boolean, onClose: () => void })
     return (
         <Dialog open={open} onOpenChange={onClose} >
             <DialogContent className="max-w-[42rem]">
-                <PreviewSection />
+                <PreviewSection scrollable />
             </DialogContent>
         </Dialog>
     )

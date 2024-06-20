@@ -1,15 +1,16 @@
 "use client"
-import React, { use, useCallback, useEffect, useState } from 'react'
-import PersonalDetailForm from './forms/PersonalDetailForm';
+import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, FullscreenIcon, LayoutGrid } from 'lucide-react';
+import { ArrowLeft, ArrowRight, FullscreenIcon, HomeIcon, LayoutGrid } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import SummaryDetailForm from './forms/SummaryDetailForm';
 import dynamic from 'next/dynamic';
-import ExperienceDetailForm from './forms/ExperienceDetailForm';
-import EducationDetailForm from './forms/EducationDetailForm';
-import SkillsDetail from './forms/SkillsDetail';
+import Link from 'next/link';
 
+const PersonalDetailForm = dynamic(() => import('./forms/PersonalDetailForm'), { ssr: true });
+const SummaryDetailForm = dynamic(() => import('./forms/SummaryDetailForm'), { ssr: true });
+const ExperienceDetailForm = dynamic(() => import('./forms/ExperienceDetailForm'), { ssr: true });
+const EducationDetailForm = dynamic(() => import('./forms/EducationDetailForm'), { ssr: true });
+const SkillsDetail = dynamic(() => import('./forms/SkillsDetail'), { ssr: true });
 const PreviewModal = dynamic(() => import('./modal/PreviewModal'), { ssr: false });
 
 const FormSection = () => {
@@ -33,11 +34,23 @@ const FormSection = () => {
         }
     }, [])
     return (
-        <div className='no-scrollbar h-[85vh] overflow-auto'>
+        <div id='no-print' className='no-scrollbar h-[85vh] overflow-auto'>
             <div className='flex items-center justify-between'>
-                <Button variant="outline" className='flex gap-2'>
-                    <LayoutGrid /> Theme
-                </Button>
+                <div className='flex gap-2'>
+                    <Button asChild variant={"btn"}>
+                        <Link href="/dashboard" className='flex gap-2'>
+                            <HomeIcon />
+                        </Link>
+                    </Button>
+                    <Button variant="outline" className='flex gap-2'>
+                        <LayoutGrid /> Theme
+                    </Button>
+                    <Button asChild variant={"btn"}>
+                        <Link href="/dashboard/resume" className='flex gap-2'>
+                            <HomeIcon /> View
+                        </Link>
+                    </Button>
+                </div>
                 <div className='flex gap-x-3'>
                     <div className='flex gap-x-3'>
                         <Button onClick={onPrevious} size="sm"

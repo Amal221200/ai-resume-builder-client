@@ -9,7 +9,7 @@ import { UserButton } from '@clerk/nextjs'
 const Header = () => {
     const { userId } = auth()
     return (
-        <header className='flex items-center justify-between p-3 px-5 shadow-md'>
+        <header id='no-print' className='flex items-center justify-between p-3 px-5 shadow-md'>
             <Image src="/logo.svg" alt='logo' width={40} height={40} />
 
             <div className='flex items-center gap-x-2'>

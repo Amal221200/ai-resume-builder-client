@@ -2,7 +2,7 @@
 
 import { TSkill } from '@/lib/types'
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider'
+import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider'
 import { updateResume } from '@/lib/actions/resume'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
@@ -18,7 +18,7 @@ const formField: TSkill = {
 }
 
 const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-  const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
+  const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
   const name = useId()
 
   const [loading, setLoading] = useState(false)

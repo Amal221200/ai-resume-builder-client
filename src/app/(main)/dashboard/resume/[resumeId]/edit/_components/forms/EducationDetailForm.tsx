@@ -1,7 +1,7 @@
 "use client"
 
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
+import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -23,7 +23,7 @@ const formField: TEducation = {
 }
 
 const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
+    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
     const degree = useId()
     const major = useId()
     const universityName = useId()

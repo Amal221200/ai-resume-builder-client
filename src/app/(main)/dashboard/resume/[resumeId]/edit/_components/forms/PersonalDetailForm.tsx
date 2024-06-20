@@ -2,13 +2,13 @@
 
 import { Input } from '@/components/ui/input';
 import React, { FormEvent, use, useCallback, useId, useState } from 'react'
-import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
+import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import LoadingButton from '@/components/buttons/LoadingButton';
 
 const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
+    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
     const handleInput = (e: FormEvent<HTMLInputElement>) => {
         setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, [e.currentTarget.name]: e.currentTarget.value } })
         enableNav(false)

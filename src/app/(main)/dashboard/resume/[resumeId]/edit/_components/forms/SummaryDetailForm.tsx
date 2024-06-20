@@ -1,6 +1,6 @@
 "use client";
 import React, { ChangeEvent, FormEvent, use, useCallback, useId, useState } from 'react'
-import { EditReviewContext, TEditorReviewContext } from '../providers/EditReviewProvider';
+import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,7 +11,7 @@ import { generateAISummary } from '@/lib/actions/gemini_ai';
 const PROMPT = `Job Title: {jobTitle}, Depends on job title give me list of summary for 3 experience level:- Senior Level, Mid Level and Freasher level in 3-4 lines in array format, with summary and experience_level Field in JSON Format`
 
 const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
+    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
     const summary = useId()
 
     const [loading, setLoading] = useState(false)

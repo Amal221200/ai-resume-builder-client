@@ -1,11 +1,11 @@
 "use client"
 import { use } from "react";
-import { EditReviewContext, TEditorReviewContext } from "../providers/EditReviewProvider";
+import { EditResumeContext, TEditResumeContext } from "../providers/EditResumeProvider";
 
 
 const SummaryPreview = ({  }: { }) => {
 
-    const { resumeInfo, setResumeInfo } = use(EditReviewContext) as TEditorReviewContext;
+    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
     return (
         <p className="text-xs font-medium">
             {resumeInfo.attributes?.summary}
