@@ -4,13 +4,18 @@ import { Button } from './ui/button'
 import ThemeSwither from './ThemeSwither'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
-import { UserButton } from '@clerk/nextjs'
+import dynamic from 'next/dynamic'
+import { Skeleton } from './ui/skeleton'
+
+const ThemedUserButton = dynamic(() => import('./ThemedUserButton'), { ssr: false, loading: () => <Skeleton className='h-8 w-8 rounded-full' /> })
 
 const Header = () => {
     const { userId } = auth()
     return (
         <header id='no-print' className='flex items-center justify-between p-3 px-5 shadow-md'>
-            <Image src="/logo.svg" alt='logo' width={40} height={40} />
+            <Link href="/dashboard">
+                <Image src="/logo.svg" alt='logo' width={40} height={40} />
+            </Link>
 
             <div className='flex items-center gap-x-2'>
                 {
@@ -19,7 +24,8 @@ const Header = () => {
                             <Button asChild variant="outline">
                                 <Link href="/dashboard">Dashboard</Link>
                             </Button>
-                            <UserButton />
+
+                            <ThemedUserButton />
                         </>
                     ) : (
 

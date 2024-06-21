@@ -65,7 +65,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     }, [enableNav, resumeInfo])
 
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, education: educationList } }))
+        setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, educations: educationList } }))
     }, [educationList, setResumeInfo])
 
 
@@ -100,6 +100,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
                                 </div>
 
                                 <div className='col-span-2'>
+                                    <label htmlFor={description}>Description</label>
                                     <Textarea value={education.description} id={`${description}-${key}`} name='description' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
                             </div>

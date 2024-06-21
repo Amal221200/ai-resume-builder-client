@@ -1,8 +1,9 @@
 import { getResumes } from '@/lib/actions/resume'
 import dynamic from 'next/dynamic'
-import ResumeCard from './_components/ResumeCard'
 import CardLoading from './_components/CardLoading'
+
 const AddResume = dynamic(() => import('./_components/AddResume'), { ssr: false, loading: () => <CardLoading /> })
+const ResumeCard = dynamic(() => import('./_components/ResumeCard'), { ssr: true, loading: () => <CardLoading /> })
 
 const DashboardPage = async () => {
   const resumes = await getResumes()

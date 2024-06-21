@@ -3,13 +3,14 @@ import { getResume } from '@/lib/actions/resume'
 import React from 'react'
 import EditResumeProvider from './_components/providers/EditResumeProvider';
 import dynamic from 'next/dynamic';
+import SectionLoading from './_components/SectionLoading';
 
-const FormSection = dynamic(() => import('./_components/FormSection'), { ssr: false });
-const PreviewSection = dynamic(() => import('./_components/PreviewSection'), { ssr: false });
+const FormSection = dynamic(() => import('./_components/FormSection'), { ssr: false, loading: () => <SectionLoading /> });
+const PreviewSection = dynamic(() => import('./_components/PreviewSection'), { ssr: false, loading: () => <SectionLoading /> });
 
 const EditResumePage = async ({ params: { resumeId } }: { params: { resumeId: string } }) => {
     const resume = await getResume(resumeId);
-    
+
     if (!resume) {
         return
     }

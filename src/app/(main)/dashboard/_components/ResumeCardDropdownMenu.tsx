@@ -6,9 +6,9 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Download, Loader2, Pen, Trash, View } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { useRouter } from "next13-progressbar"
 import { deleteResume } from "@/lib/actions/resume"
 import { toast } from 'sonner'
 

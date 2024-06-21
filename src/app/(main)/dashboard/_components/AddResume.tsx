@@ -41,11 +41,10 @@ const AddResume = () => {
 
     return (
         <AlertDialog open={open} onOpenChange={() => setOpen(current => !current)}>
-            <AlertDialogTrigger>
-                <div className='flex h-[280px] cursor-pointer items-center justify-center rounded-lg border border-dashed bg-secondary p-14 py-24 transition-all hover:scale-105 hover:shadow-md'>
+            <AlertDialogTrigger asChild>
+                <div className='flex h-full cursor-pointer items-center justify-center rounded-lg border border-dashed bg-secondary p-14 py-24 transition-all hover:scale-105 hover:shadow-md'>
                     <PlusSquareIcon />
                 </div>
-                <div className='my-1 text-white dark:text-black'>O</div>
             </AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>

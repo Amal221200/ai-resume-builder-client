@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 /* rich text editor */
+.rsw-editor.dim {
+  opacity: .5;
+}
 .rsw-ce ul,
 .experience-work-summary ul {
   list-style: disc;

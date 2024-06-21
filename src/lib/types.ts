@@ -19,35 +19,39 @@ export type TResume = {
         educations: Array<TEducation>,
         skills: Array<TSkill>,
         experiences: Array<TExperience>,
-        projects: Array<TProjects>,
+        projects: Array<TProject>,
         certificates: Array<TCertificate>,
     },
 
 }
 
-export type TProjects = {
-    [index: string]: any,
+export type TProject = {
+    [index: string]: unknown,
     id?: number,
-    name: string,
-    rating: number
+    title: string,
+    link: string,
+    stack: string,
+    description: string
 }
 
 export type TCertificate = {
-    [index: string]: any,
+    [index: string]: unknown,
     id?: number,
-    name: string,
-    rating: number
+    title: string,
+    link: string,
+    provider: string,
+    description: string
 }
 
 export type TSkill = {
-    [index: string]: any,
+    [index: string]: unknown,
     id?: number,
     name: string,
     rating: number
 }
 
 export type TEducation = {
-    [index: string]: any,
+    [index: string]: unknown,
     id?: number,
     universityName: string,
     startDate: string,
@@ -59,7 +63,7 @@ export type TEducation = {
 }
 
 export type TExperience = {
-    [index: string]: any,
+    [index: string]: unknown,
     id?: number,
     title: string,
     companyName: string,
@@ -67,6 +71,7 @@ export type TExperience = {
     state: string,
     startDate: string,
     endDate: string,
+    skills: string,
     currentlyWorking: boolean,
     workSummary: string
 }

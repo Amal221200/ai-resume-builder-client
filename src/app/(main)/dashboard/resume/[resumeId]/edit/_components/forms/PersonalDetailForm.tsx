@@ -39,7 +39,7 @@ const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-            <h2 className='text-lg font-bold'>Personal Detail</h2>
+            <h2 className='text-lg font-bold'>Personal Detail (Mandatory)</h2>
             <p>Get Started with your basic information</p>
             <form onSubmit={onSubmit}>
                 <div className='mt-5 grid grid-cols-2 gap-3'>
