@@ -60,13 +60,13 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   }, [skillsList, setResumeInfo])
 
   return (
-    <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-      <h2 className='text-lg font-bold'>Skills</h2>
-      <p>Add Your Skills</p>
+    <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
+      <h2 className='text-base font-bold sm:text-lg'>Skills</h2>
+      <p className='text-sm sm:text-base'>Add Your Skills</p>
       <form onSubmit={onSubmit}>
         {skillsList.map((skill, key) => (
           <Fragment key={key}>
-            <div className='my-5 grid grid-cols-2 gap-3 rounded-lg border p-3'>
+            <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
                 <label htmlFor={name} className='text-xs'>Name</label>
                 <Input value={skill.name} name='name' id={name} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />

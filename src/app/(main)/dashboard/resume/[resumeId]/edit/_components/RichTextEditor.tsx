@@ -31,9 +31,9 @@ const RichTextEditor = ({ name, onInput, value, className, prompt, loading, setL
 
     return (
         <EditorProvider >
-            <div className='my-3 flex items-end justify-between'>
-                <label>{label || ""}</label>
-                <AIButton onClick={onGenerate} disabled={!enable || loading}>
+            <div className='my-3 flex flex-col gap-y-2 sx:flex-row sx:items-center sx:justify-between'>
+                <label className='text-sm'>{label || ""}</label>
+                <AIButton onClick={onGenerate} className='ml-auto' disabled={!enable || loading}>
                     Generate from AI
                 </AIButton>
             </div>

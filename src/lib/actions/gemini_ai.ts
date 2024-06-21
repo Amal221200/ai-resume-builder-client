@@ -32,7 +32,7 @@ export async function generateAIWorkSummary(prompt: string) {
 }
 export async function generateAISummary(prompt: string) {
     const chatSession = model.startChat({
-        generationConfig: { ...generationConfig, responseMimeType: 'text/json' },
+        generationConfig: { ...generationConfig, responseMimeType: 'application/json' },
         history: [
         ],
     });

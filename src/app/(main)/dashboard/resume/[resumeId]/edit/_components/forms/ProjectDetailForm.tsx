@@ -80,14 +80,14 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
     }, [projectsList, setResumeInfo])
 
     return (
-        <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-            <h2 className='text-lg font-bold'>Projects</h2>
-            <p>Add a few projects to show your achievements</p>
+        <div className='extra-small mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
+            <h2 className='text-base font-bold sm:text-lg'>Projects</h2>
+            <p className='text-sm sm:text-base'>Add a few projects to show your achievements</p>
             <form onSubmit={onSubmit}>
                 {
                     projectsList.map((project, key) => (
                         <Fragment key={key}>
-                            <div className='my-5 grid grid-cols-2 gap-3 rounded-lg border p-3'>
+                            <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
                                 <div>
                                     <label htmlFor={title} className='text-xs'>Project Title</label>
                                     <Input required value={project.title} id={title} name='title' onInput={(e) => handleInput(e, key)} />
@@ -96,12 +96,12 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
                                     <label htmlFor={link} className='text-xs'>Project URL</label>
                                     <Input type='url' required value={project.link} id={link} name='link' onInput={(e) => handleInput(e, key)} />
                                 </div>
-                                <div className='col-span-2'>
+                                <div className='sm:col-span-2'>
                                     <label htmlFor={stack} className='text-xs'>Stack</label>
                                     <Input required value={project.stack} id={stack} name='stack' onInput={(e) => handleInput(e, key)} />
                                 </div>
 
-                                <div className='col-span-2'>
+                                <div className='sm:col-span-2'>
                                     <RichTextEditor name='description' label='Project Description' loading={loading}
                                         setLoading={(val) => setLoading(val)} value={project.description}
                                         onInput={(name, value) => handleDescription(name, value, key)}

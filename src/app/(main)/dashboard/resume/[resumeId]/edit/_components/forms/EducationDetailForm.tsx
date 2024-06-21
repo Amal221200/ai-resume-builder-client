@@ -70,36 +70,36 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
 
 
     return (
-        <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-            <h2 className='text-lg font-bold'>Education Details</h2>
-            <p>Add Your Previous Education</p>
+        <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
+            <h2 className='text-base font-bold sm:text-lg'>Education Details</h2>
+            <p className='text-sm sm:text-base'>Add Your Previous Education</p>
             <form onSubmit={onSubmit}>
                 {
                     educationList.map((education, key) => (
                         <Fragment key={key}>
-                            <div className='my-5 grid grid-cols-2 gap-3 rounded-lg border p-3'>
-                                <div className='col-span-2'>
-                                    <label htmlFor={`${universityName}-${key}`} className='text-xs'>University Name</label>
-                                    <Input required value={education.universityName} id={`${universityName}-${key}`} name='universityName' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                            <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
+                                <div className='sm:col-span-2'>
+                                    <label htmlFor={universityName} className='text-xs'>University Name</label>
+                                    <Input required value={education.universityName} id={universityName} name='universityName' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
                                 <div>
-                                    <label htmlFor={`${degree}-${key}`} className='text-xs'>Degree</label>
-                                    <Input required value={education.degree} id={`${degree}-${key}`} name='degree' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                                    <label htmlFor={degree} className='text-xs'>Degree</label>
+                                    <Input required value={education.degree} id={degree} name='degree' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
                                 <div>
-                                    <label htmlFor={`${major}-${key}`} className='text-xs'>Major</label>
-                                    <Input required value={education.major} id={`${major}-${key}`} name='major' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                                    <label htmlFor={major} className='text-xs'>Major</label>
+                                    <Input required value={education.major} id={major} name='major' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
                                 <div>
-                                    <label htmlFor={`${startDate}-${key}`} className='text-xs'>Start Date</label>
-                                    <Input required value={education.startDate} type='date' id={`${startDate}-${key}`} name='startDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                                    <label htmlFor={startDate} className='text-xs'>Start Date</label>
+                                    <Input required value={education.startDate} type='date' id={startDate} name='startDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
                                 <div>
-                                    <label htmlFor={`${endDate}-${key}`} className='text-xs'>End Date</label>
-                                    <Input required value={education.endDate} type='date' id={`${endDate}-${key}`} name='endDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                                    <label htmlFor={endDate} className='text-xs'>End Date</label>
+                                    <Input required value={education.endDate} type='date' id={endDate} name='endDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
 
-                                <div className='col-span-2'>
+                                <div className='sm:col-span-2'>
                                     <label htmlFor={description}>Description</label>
                                     <Textarea value={education.description} id={`${description}-${key}`} name='description' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>

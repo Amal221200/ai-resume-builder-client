@@ -13,10 +13,10 @@ const DashboardPage = async () => {
   }
 
   return (
-    <div className='p-10 md:px-20 lg:px-32'>
+    <div className='p-5 sm:p-10 md:px-20 lg:px-32'>
       <h2 className='text-3xl font-bold'>My Resume</h2>
       <p>Start Creating AI resume for your next job application</p>
-      <div className='mt-10 grid grid-cols-2 content-center items-center gap-2 md:grid-cols-3 md:gap-3 lg:grid-cols-5 lg:gap-5'>
+      <div className='mx-auto my-2 grid max-w-64 grid-cols-1 gap-2 xs:mx-0 xs:max-w-none xs:grid-cols-2 md:grid-cols-3 md:gap-3 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5'>
         <AddResume />
         {
           resumes.map(resume => (

@@ -65,12 +65,12 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
 
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-      <h2 className='text-lg font-bold'>Certificates</h2>
-      <p>Add Your Certificates</p>
+      <h2 className='text-base font-bold sm:text-lg'>Certificates</h2>
+      <p className='text-sm sm:text-base'>Add Your Certificates</p>
       <form onSubmit={onSubmit}>
         {certificatesList.map((certificate, key) => (
           <Fragment key={key}>
-            <div className='my-5 grid grid-cols-2 gap-3 rounded-lg border p-3'>
+            <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
                 <label htmlFor={title} className='text-xs'>Certificate Title</label>
                 <Input value={certificate.title} required name='title' id={title} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
@@ -83,7 +83,7 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
                 <label htmlFor={provider} className='text-xs'>Certificate Provider</label>
                 <Input value={certificate.provider} required name='provider' id={provider} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
               </div>
-              <div className='col-span-2'>
+              <div className='sm:col-span-2'>
                 <label htmlFor={description} className='text-xs'>Description</label>
                 <Textarea value={certificate.description} id={description} name='description' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
               </div>

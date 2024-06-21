@@ -13,7 +13,7 @@ const ViewResumePage = async ({ params: { resumeId } }: { params: { resumeId: st
     }
     return (
         <EditResumeProvider resume={resume}>
-            <div className='mx-auto mb-3 max-w-2xl' id='print'>
+            <div className='mx-auto max-w-2xl p-3' id='print'>
                 <PreviewButtons />
                 <PreviewSection />
             </div>

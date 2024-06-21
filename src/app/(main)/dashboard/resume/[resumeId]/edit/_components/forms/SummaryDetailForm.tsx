@@ -46,15 +46,15 @@ const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
     }, [enableNav, resumeInfo])
 
     return (
-        <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-            <h2 className='text-lg font-bold'>Summary Detail</h2>
-            <p>Tell something about yourself, your passion, and your objective in breif.</p>
+        <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
+            <h2 className='text-base font-bold sm:text-lg'>Summary Detail</h2>
+            <p className='text-sm sm:text-base'>Tell something about yourself, your passion, and your objective in breif.</p>
             <form onSubmit={onSubmit}>
                 <div className='mt-5'>
                     <div className='space-y-2'>
-                        <div className='flex items-end justify-between'>
+                        <div className='my-3 flex flex-col gap-y-2 sx:flex-row sx:items-center sx:justify-between'>
                             <label className='text-sm' htmlFor={summary}>Summary</label>
-                            <AIButton disabled={generating} onClick={onGenerateAISummary}>
+                            <AIButton disabled={generating} onClick={onGenerateAISummary} className='ml-auto'>
                                 Generate from AI
                             </AIButton>
                         </div>
@@ -73,7 +73,10 @@ const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
                     <h2 className='text-lg font-bold'>Suggestions</h2>
                     {aiGeneratedSummaryList?.map((item, index) => (
                         <div key={index}
-                            onClick={() => setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, summary: item?.summary } })}
+                            onClick={() => {
+                                setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, summary: item?.summary } })
+                                setAiGeneratedSummaryList([])
+                            }}
                             className='my-4 cursor-pointer rounded-lg p-5 shadow-lg transition-all hover:bg-foreground/10'>
                             <h2 className='my-1 font-bold text-primary'>Level: {item?.experience_level}</h2>
                             <p>{item?.summary}</p>

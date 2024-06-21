@@ -17,7 +17,7 @@ const EditResumePage = async ({ params: { resumeId } }: { params: { resumeId: st
 
     return (
         <EditResumeProvider resume={resume}>
-            <div className='grid grid-cols-1 gap-10 p-10 lg:grid-cols-2'>
+            <div className='grid grid-cols-1 gap-10 p-3 sm:p-10 lg:grid-cols-2'>
                 <FormSection />
                 <PreviewSection className="hidden lg:block" />
             </div>

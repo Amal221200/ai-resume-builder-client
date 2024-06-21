@@ -43,11 +43,13 @@ html.dark .rws-close {
   body {
     background-color: white;
   }
-
+  
   #print {
     display: block;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
     background: initial;
-    @apply max-w-none;
+    @apply max-w-none p-0;
   }
 
   .print-remove-shadow {
