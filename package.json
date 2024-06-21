@@ -27,6 +27,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-simple-wysiwyg": "^3.0.2",
+    "react-web-share": "^2.0.2",
     "sonner": "^1.5.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",

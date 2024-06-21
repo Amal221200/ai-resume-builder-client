@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* rich text editor */
 .rsw-ce ul,
 .experience-work-summary ul {
   list-style: disc;
@@ -12,6 +13,22 @@
 .experience-work-summary ol {
   list-style: decimal;
   padding-left: 2em;
+}
+
+/* react web share */
+html.light .rws-container {  
+  background-color: #fff !important;
+}
+
+html.light .rws-close {  
+  background-color: #eee !important;
+}
+
+html.dark .rws-container {  
+  background-color: #111 !important;
+}
+html.dark .rws-close {  
+  background-color: #333 !important;
 }
 
 @media print {

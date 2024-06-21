@@ -62,6 +62,23 @@ export async function updateResume(resume: TResume): Promise<TResume | undefined
     }
 }
 
+export async function deleteResume(resumeId : number): Promise<TResume | undefined> {
+    try {
+        const user = await currentUser()
+
+        if (!user) {
+            redirect('/auth/sign-in')
+        }
+
+        const response = await axiosClient.delete(`${ENDPOINT}/${resumeId}`)
+
+        revalidatePath(`/dashboard`)
+        return response.data.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 export async function createResume(title: string): Promise<TResume | undefined> {
     try {

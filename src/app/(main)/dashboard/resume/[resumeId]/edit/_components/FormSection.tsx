@@ -44,10 +44,7 @@ const FormSection = () => {
                             <HomeIcon />
                         </Link>
                     </Button>
-                    <Button variant="outline" className='flex gap-2'>
-                        <LayoutGrid /> Theme
-                    </Button>
-                    <Button asChild variant={"btn"}>
+                    <Button asChild  variant={"outline"} className='border-primary-btn text-primary-btn'>
                         <Link href={`/dashboard/resume/${resumeInfo.id}/view`} className='flex gap-2'>
                             <HomeIcon /> View
                         </Link>
