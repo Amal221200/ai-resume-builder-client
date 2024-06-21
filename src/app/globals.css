@@ -16,18 +16,19 @@
 }
 
 /* react web share */
-html.light .rws-container {  
+html.light .rws-container {
   background-color: #fff !important;
 }
 
-html.light .rws-close {  
+html.light .rws-close {
   background-color: #eee !important;
 }
 
-html.dark .rws-container {  
+html.dark .rws-container {
   background-color: #111 !important;
 }
-html.dark .rws-close {  
+
+html.dark .rws-close {
   background-color: #333 !important;
 }
 
@@ -35,13 +36,14 @@ html.dark .rws-close {
   #no-print {
     display: none;
   }
+
   * {
     @apply shadow-none shadow-white dark:shadow-white;
   }
 
   html {
-    color-scheme: light;
-    background: white;
+    /* color-scheme: light; */
+    /* background: white; */
   }
 
   body {
@@ -66,8 +68,9 @@ html.dark .rws-close {
 }
 
 @page {
- size: auto;
- margin: 0mm; 
+  color-scheme: light;
+  size: auto;
+  margin: 0mm;
 }
 
 @layer base {
