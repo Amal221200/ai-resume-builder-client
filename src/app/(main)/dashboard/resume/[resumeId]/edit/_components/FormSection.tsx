@@ -12,7 +12,6 @@ const SummaryDetailForm = dynamic(() => import('./forms/SummaryDetailForm'), { s
 const ExperienceDetailForm = dynamic(() => import('./forms/ExperienceDetailForm'), { ssr: true });
 const EducationDetailForm = dynamic(() => import('./forms/EducationDetailForm'), { ssr: true });
 const SkillsDetail = dynamic(() => import('./forms/SkillsDetail'), { ssr: true });
-const PreviewModal = dynamic(() => import('./modal/PreviewModal'), { ssr: false });
 
 const FormSection = () => {
     const {resumeInfo} = use(EditResumeContext) as TEditResumeContext
@@ -82,8 +81,6 @@ const FormSection = () => {
             {
                 activeForm === 5 && <SkillsDetail enableNav={(val) => setEnableNav(val)} />
             }
-
-            <PreviewModal open={openPreviewModal} onClose={() => setOpenPreviewModal(false)} />
         </div>
     )
 }

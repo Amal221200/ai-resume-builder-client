@@ -16,11 +16,27 @@ export type TResume = {
         email?: string,
         jobTitle?: string,
         summary?: string,
-        education: Array<TEducation>,
+        educations: Array<TEducation>,
         skills: Array<TSkill>,
-        experience: Array<TExperience>
+        experiences: Array<TExperience>,
+        projects: Array<TProjects>,
+        certificates: Array<TCertificate>,
     },
 
+}
+
+export type TProjects = {
+    [index: string]: any,
+    id?: number,
+    name: string,
+    rating: number
+}
+
+export type TCertificate = {
+    [index: string]: any,
+    id?: number,
+    name: string,
+    rating: number
 }
 
 export type TSkill = {

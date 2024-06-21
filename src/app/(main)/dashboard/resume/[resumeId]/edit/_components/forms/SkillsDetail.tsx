@@ -22,7 +22,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const name = useId()
 
   const [loading, setLoading] = useState(false)
-  const [skillsList, setSkillsList] = useState([...(resumeInfo.attributes.skills?.length) ? resumeInfo.attributes.skills : []])
+  const [skillsList, setSkillsList] = useState(resumeInfo.attributes.skills)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
     const newEntries = skillsList.slice()
@@ -42,11 +42,10 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-    console.log("hello");
 
     try {
-      const data = resumeInfo.attributes.education.map(({ id, ...rest }) => ({ ...rest }))
-      await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, education: data } });
+      const data = resumeInfo.attributes.skills.map(({ id, ...rest }) => ({ ...rest }))
+      await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, skills: data } });
       toast.success("Successfully updated education details.")
     } catch (error) {
       toast.error("Error updating education details.")

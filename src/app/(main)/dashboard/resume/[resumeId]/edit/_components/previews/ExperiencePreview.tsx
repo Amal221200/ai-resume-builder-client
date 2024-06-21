@@ -15,7 +15,7 @@ const ExperiencePreview = ({ }: {}) => {
       <Separator className='h-[1.5px]' style={{ backgroundColor: resumeInfo.attributes?.themeColor }} />
 
       {
-        resumeInfo.attributes?.experience?.map((experience, index) => (
+        resumeInfo.attributes.experiences.map((experience, index) => (
           <div key={index} className='my-5'>
             <h6 style={{ color: resumeInfo.attributes?.themeColor }} className='text-sm font-bold'>{experience.title}</h6>
             <p className='flex justify-between text-sm'>

@@ -33,7 +33,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
     const endDate = useId()
 
     const [loading, setLoading] = useState(false)
-    const [experienceList, setExperienceList] = useState([...(resumeInfo.attributes.experience?.length) ? resumeInfo.attributes.experience : []])
+    const [experienceList, setExperienceList] = useState( resumeInfo.attributes.experiences)
 
     const handleInput = useCallback((e: FormEvent<HTMLInputElement>, index: number) => {
         const newEntries = experienceList.slice()
@@ -62,8 +62,8 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
         e.preventDefault()
         setLoading(true)
         try {
-            const data = resumeInfo.attributes.experience.map(({ id, ...rest }) => ({ ...rest }))
-            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, experience: data } });
+            const data = resumeInfo.attributes.experiences.map(({ id, ...rest }) => ({ ...rest }))
+            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, experiences: data } });
             toast.success("Successfully updated experience details.")
         } catch (error) {
             toast.error("Error updating experience details.")

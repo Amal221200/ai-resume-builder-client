@@ -32,7 +32,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     const endDate = useId()
 
     const [loading, setLoading] = useState(false)
-    const [educationList, setEducationList] = useState([...(resumeInfo.attributes.education?.length) ? resumeInfo.attributes.education : []])
+    const [educationList, setEducationList] = useState(resumeInfo.attributes.educations)
 
     const handleInput = useCallback((name: string, value: string, index: number) => {
         const newEntries = educationList.slice()
@@ -53,8 +53,8 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
         e.preventDefault()
         setLoading(true)
         try {
-            const data = resumeInfo.attributes.education.map(({ id, ...rest }) => ({ ...rest }))
-            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, education: data } });
+            const data = resumeInfo.attributes.educations.map(({ id, ...rest }) => ({ ...rest }))
+            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, educations: data } });
             toast.success("Successfully updated education details.")
         } catch (error) {
             toast.error("Error updating education details.")

@@ -37,15 +37,6 @@ html.dark .rws-close {
     display: none;
   }
 
-  * {
-    @apply shadow-none shadow-white dark:shadow-white;
-  }
-
-  html {
-    /* color-scheme: light; */
-    /* background: white; */
-  }
-
   body {
     background-color: white;
   }

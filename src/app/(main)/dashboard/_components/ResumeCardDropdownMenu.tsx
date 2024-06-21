@@ -10,6 +10,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Download, Loader2, Pen, Trash, View } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { deleteResume } from "@/lib/actions/resume"
+import { toast } from 'sonner'
 
 const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, resumeId: number }) => {
     const router = useRouter()
@@ -18,8 +19,10 @@ const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, r
 
     const action = useCallback(async () => {
         setLoading(true)
-        deleteResume(resumeId)
+        await deleteResume(resumeId)
         setLoading(false)
+        setOpen(false)
+        toast.success("Successfully deleted")
     }, [resumeId])
 
 
@@ -57,7 +60,7 @@ const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, r
                             Cancel
                         </AlertDialogCancel>
                         <AlertDialogAction disabled={loading} onClick={action} className='bg-primary-btn disabled:opacity-80'>
-                            {loading ? <Loader2  className='animate-spin'/> : "Delete"}
+                            {loading ? <Loader2 className='animate-spin' /> : "Delete"}
                         </AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

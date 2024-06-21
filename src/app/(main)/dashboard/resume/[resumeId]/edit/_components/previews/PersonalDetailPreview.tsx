@@ -4,7 +4,7 @@ import { use } from "react";
 import { EditResumeContext, TEditResumeContext } from "../providers/EditResumeProvider";
 
 const PersonalDetailPreview = ({  }: {  }) => {
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+    const { resumeInfo } = use(EditResumeContext) as TEditResumeContext;
 
     return (
         <div className="">
