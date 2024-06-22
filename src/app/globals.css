@@ -49,6 +49,7 @@ html.dark .rws-close {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
     background: initial;
+    background: white;
     @apply max-w-none p-0;
   }
 

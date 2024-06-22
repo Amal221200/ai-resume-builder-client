@@ -47,7 +47,6 @@ export type TSkill = {
     [index: string]: unknown,
     id?: number,
     name: string,
-    rating: number
 }
 
 export type TEducation = {

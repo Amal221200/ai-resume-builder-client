@@ -1,7 +1,7 @@
 "use client"
 
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider';
+import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';

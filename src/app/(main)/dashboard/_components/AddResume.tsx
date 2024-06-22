@@ -16,6 +16,7 @@ import { useCallback, useState } from 'react'
 import { createResume } from '@/lib/actions/resume'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
 
 const AddResume = () => {
 
@@ -23,21 +24,29 @@ const AddResume = () => {
     const [open, setOpen] = useState(false)
     const [loading, setLoading] = useState(false)
     const router = useRouter()
-
+    const { user } = useUser()
     const onCreate = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         e.stopPropagation()
-        setLoading(true)
-        const response = await createResume(resumeTitle)
-        setLoading(false)
-        if (!response) {
-            return;
+
+        if (!user?.username) {
+            toast.warning('Please add a username using the user button on the top left side.')
+            return
         }
-        setOpen(false)
-        setResumeTitle('')
-        router.push(`/dashboard/resume/${response.id}/edit`)
-        toast.success('Successfully created')
-    }, [resumeTitle, router])
+        
+        try {
+            setLoading(true)
+            const response = await createResume(resumeTitle)
+            router.push(`/dashboard/resume/${response?.id!}/edit`)
+            toast.success('Successfully created')
+        } catch (error) {
+            toast.error('Unable to create resume')
+        } finally {
+            setLoading(false)
+            setOpen(false)
+            setResumeTitle('')
+        }
+    }, [resumeTitle, router, user])
 
     return (
         <AlertDialog open={open} onOpenChange={() => setOpen(current => !current)}>

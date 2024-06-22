@@ -1,7 +1,7 @@
 "use client"
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ArrowRight, FileText, HomeIcon} from 'lucide-react';
+import { ArrowLeft, ArrowRight, FileText, HomeIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ const ProjectDetailForm = dynamic(() => import('./forms/ProjectDetailForm'), { s
 const CertificateDetailForm = dynamic(() => import('./forms/CertificateDetialForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
 
 const FormSection = () => {
-const {resumeId} = useParams()
+    const { resumeId } = useParams()
     const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step`) ?? '1'))
     const [enableNav, setEnableNav] = useState(true)
     const onNext = useCallback(() => {
@@ -41,9 +41,14 @@ const {resumeId} = useParams()
         <div id='no-print' className='no-scrollbar h-[85vh] overflow-auto'>
             <div className='flex items-center justify-between'>
                 <div className='flex gap-2'>
-                    <Button asChild variant={"btn"}>
+                    <Button asChild variant={"btn"} size={'sm'}>
                         <Link href="/dashboard" className='flex gap-2'>
                             <HomeIcon />
+                        </Link>
+                    </Button>
+                    <Button variant={'btn'} size="sm" disabled={!enableNav}>
+                        <Link href={`/dashboard/resume/${resumeId}/view`} className='flex items-center gap-1'>
+                            <FileText size={20} /> View
                         </Link>
                     </Button>
                 </div>

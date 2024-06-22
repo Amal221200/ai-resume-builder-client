@@ -2,7 +2,7 @@
 
 import { Input } from '@/components/ui/input';
 import React, { FormEvent, use, useCallback, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider';
+import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import LoadingButton from '@/components/buttons/LoadingButton';

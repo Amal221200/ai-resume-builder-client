@@ -1,6 +1,6 @@
 "use client";
 import React, { ChangeEvent, FormEvent, use, useCallback, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider';
+import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';

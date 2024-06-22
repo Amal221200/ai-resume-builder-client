@@ -11,3 +11,10 @@ export function getExperience(startDate: Date, endDate: Date) {
   const months = endDate.getMonth() - startDate.getMonth()
   return `${years} years${months > 0 ? ` and ${months} months` : ''}`
 }
+
+export function formatDate(date: Date) {
+  const formatter = new Intl.DateTimeFormat('en-US', { dateStyle: 'long' })
+  const parts = formatter.formatToParts(date)
+  
+  return `${parts[0].value} ${parts.at(-1)?.value}`
+}

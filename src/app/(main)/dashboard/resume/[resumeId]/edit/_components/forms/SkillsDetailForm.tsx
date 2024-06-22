@@ -2,7 +2,7 @@
 
 import { TSkill } from '@/lib/types'
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../providers/EditResumeProvider'
+import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { updateResume } from '@/lib/actions/resume'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
@@ -10,11 +10,9 @@ import { Button } from '@/components/ui/button'
 import { MinusIcon, PlusIcon } from 'lucide-react'
 import LoadingButton from '@/components/buttons/LoadingButton'
 import { Input } from '@/components/ui/input'
-import Rating from '../Rating'
 
 const formField: TSkill = {
   name: "",
-  rating: 0
 }
 
 const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
@@ -69,11 +67,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
                 <label htmlFor={name} className='text-xs'>Name</label>
-                <Input value={skill.name} name='name' id={name} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
-              </div>
-              <div>
-                <label htmlFor={name} className='text-xs'>Rating</label>
-                <Rating value={skill.rating} onChange={(val) => handleInput('rating', val.toString(), key)} />
+                <Input value={skill.name} required maxLength={13} name='name' id={name} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
               </div>
             </div>
             <div className='my-3 flex justify-end'>

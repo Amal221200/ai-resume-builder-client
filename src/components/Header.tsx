@@ -4,10 +4,7 @@ import { Button } from './ui/button'
 import ThemeSwither from './ThemeSwither'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
-import dynamic from 'next/dynamic'
-import { Skeleton } from './ui/skeleton'
-
-const ThemedUserButton = dynamic(() => import('./ThemedUserButton'), { ssr: false, loading: () => <Skeleton className='h-8 w-8 rounded-full' /> })
+import { UserButton } from '@clerk/nextjs'
 
 const Header = () => {
     const { userId } = auth()
@@ -25,7 +22,7 @@ const Header = () => {
                                 <Link href="/dashboard">Dashboard</Link>
                             </Button>
 
-                            <ThemedUserButton />
+                            <UserButton />
                         </>
                     ) : (
 

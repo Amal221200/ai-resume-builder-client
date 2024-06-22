@@ -1,6 +1,6 @@
 "use client"
 import { use } from "react";
-import { EditResumeContext, TEditResumeContext } from "./providers/EditResumeProvider";
+import { EditResumeContext, TEditResumeContext } from "../../_components/providers/EditResumeProvider";
 import PersonalDetailPreview from "./previews/PersonalDetailPreview";
 import SummaryPreview from "./previews/SummaryPreview";
 import ExperiencePreview from "./previews/ExperiencePreview";

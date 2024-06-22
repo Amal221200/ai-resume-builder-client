@@ -1,10 +1,24 @@
 import { getResumes } from '@/lib/actions/resume'
 import dynamic from 'next/dynamic'
 import CardLoading from './_components/CardLoading'
+import { Metadata } from 'next'
+import { currentUser } from '@clerk/nextjs/server'
 
 const AddResume = dynamic(() => import('./_components/AddResume'), { ssr: false, loading: () => <CardLoading /> })
 const ResumeCard = dynamic(() => import('./_components/ResumeCard'), { ssr: true, loading: () => <CardLoading /> })
 
+export const generateMetadata = async (): Promise<Metadata> => {
+  const user = await currentUser()
+  
+  if (!user) {
+    return {}
+  }
+  
+  return {
+    title: `${user?.username}'s Dashboard`,
+    description: `${user?.username}'s all resumes in the dashboard page`
+  }
+}
 const DashboardPage = async () => {
   const resumes = await getResumes()
 
