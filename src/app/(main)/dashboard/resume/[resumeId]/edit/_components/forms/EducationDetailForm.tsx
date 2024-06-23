@@ -1,6 +1,5 @@
 "use client"
-
-import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
@@ -11,6 +10,7 @@ import { MinusIcon, PlusIcon } from 'lucide-react';
 import { TEducation } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const formField: TEducation = {
     degree: '',
@@ -30,11 +30,12 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     const description = useId()
     const startDate = useId()
     const endDate = useId()
+    const currentlyStuding = useId()
 
     const [loading, setLoading] = useState(false)
     const [educationList, setEducationList] = useState(resumeInfo.attributes.educations)
 
-    const handleInput = useCallback((name: string, value: string, index: number) => {
+    const handleInput = useCallback((name: string, value: string | boolean, index: number) => {
         const newEntries = educationList.slice()
         newEntries[index][name] = value
         setEducationList(newEntries)
@@ -95,10 +96,22 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
                                     <Input required value={education.startDate} type='date' id={startDate} name='startDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
                                 </div>
                                 <div>
-                                    <label htmlFor={endDate} className='text-xs'>End Date</label>
-                                    <Input required value={education.endDate} type='date' id={endDate} name='endDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                                    <div className='mb-2 flex justify-between'>
+                                        <label htmlFor={endDate} className='text-xs'>End Date</label>
+                                        <div className='flex items-center gap-2'>
+                                            <Checkbox name='currentlyStudying' id={currentlyStuding} checked={education.currentlyStudying}
+                                                onCheckedChange={(e) => {
+                                                    handleInput('currentlyStudying', e, key)
+                                                    education.endDate = ''
+                                                }} />
+                                            <label htmlFor={currentlyStuding} className='text-xs'>Present</label>
+                                        </div>
+                                    </div>
+                                    {
+                                        education.currentlyStudying ||
+                                        <Input required value={education.endDate} type='date' id={endDate} name='endDate' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                                    }
                                 </div>
-
                                 <div className='sm:col-span-2'>
                                     <label htmlFor={description}>Description</label>
                                     <Textarea value={education.description} id={`${description}-${key}`} name='description' onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
