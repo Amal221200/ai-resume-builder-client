@@ -9,7 +9,6 @@ import SkillsPreview from "./previews/SkillsPreview";
 import { cn } from "@/lib/utils";
 import ProjectsPreview from "./previews/ProjectsPreview";
 import CertificatesPreview from "./previews/CertificatesPreview";
-// import PreviewButtons from "../../_components/PreviewButtons";
 
 
 const PreviewSection = ({ className, scrollable }: { className?: string, scrollable?: boolean }) => {
@@ -18,14 +17,14 @@ const PreviewSection = ({ className, scrollable }: { className?: string, scrolla
     return (
         <div>
             <div className={cn("border-t-[20px] bg-white sm:p-14 p-3 text-black shadow-lg print-remove-shadow", scrollable && "no-scrollbar h-[85vh] overflow-auto", className)}
-                style={{ borderColor: resumeInfo.attributes?.themeColor }}>
-                {resumeInfo.attributes.firstName && <PersonalDetailPreview />}
-                {resumeInfo.attributes.summary && <SummaryPreview />}
-                {!!resumeInfo.attributes.experiences.length && <ExperiencePreview />}
-                {!!resumeInfo.attributes.educations.length && <EducationPreview />}
-                {!!resumeInfo.attributes.skills.length && <SkillsPreview />}
-                {!!resumeInfo.attributes.projects.length && <ProjectsPreview />}
-                {!!resumeInfo.attributes.certificates.length && <CertificatesPreview />}
+                style={{ borderColor: resumeInfo?.themeColor }}>
+                {resumeInfo.firstName && <PersonalDetailPreview />}
+                {resumeInfo.summary && <SummaryPreview />}
+                {!!resumeInfo.experiences?.length && <ExperiencePreview />}
+                {!!resumeInfo.educations?.length && <EducationPreview />}
+                {!!resumeInfo.skills?.length && <SkillsPreview />}
+                {!!resumeInfo.projects?.length && <ProjectsPreview />}
+                {!!resumeInfo.certificates?.length && <CertificatesPreview />}
             </div>
         </div>
     )

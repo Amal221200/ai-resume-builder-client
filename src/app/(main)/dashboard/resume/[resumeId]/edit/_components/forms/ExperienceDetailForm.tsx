@@ -1,18 +1,18 @@
 "use client"
 
-import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useMemo, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
-import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import LoadingButton from '@/components/buttons/LoadingButton';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import RichTextEditor from '@/app/(main)/dashboard/resume/[resumeId]/edit/_components/RichTextEditor';
-import { TExperience, TResume } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { getExperience } from '@/lib/utils';
 import { Checkbox } from '@/components/ui/checkbox';
+import { TExperience } from '@/lib/types-sanity';
+import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TExperience = {
     title: '',
@@ -40,7 +40,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
     const currentlyWorking = useId()
 
     const [loading, setLoading] = useState(false)
-    const [experienceList, setExperienceList] = useState(resumeInfo.attributes.experiences)
+    const [experienceList, setExperienceList] = useState(resumeInfo.experiences)
 
     const handleInput = useCallback((name: string, value: string | boolean, index: number) => {
         const newEntries = experienceList.slice()
@@ -61,8 +61,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
         e.preventDefault()
         setLoading(true)
         try {
-            const data = resumeInfo.attributes.experiences.map(({ id, ...rest }) => ({ ...rest }))
-            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, experiences: data } });
+            await updateResume({ ...resumeInfo });
             toast.success("Successfully updated experience details.")
         } catch (error) {
             toast.error("Error updating experience details.")
@@ -72,8 +71,12 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
         }
     }, [enableNav, resumeInfo])
 
+    const totalExperience = useCallback((experience: TExperience) => getExperience(new Date(experience.startDate), experience.currentlyWorking ? new Date() : new Date(experience.endDate)), [])
+    const enableAI = useCallback((experience: TExperience) => !!(experience.title && experience.skills && experience.startDate && experience.endDate), [])
+    const finalPrompt = useCallback((experience: TExperience) => PROMPT.replace('{title}', experience.title).replace('{experience}', totalExperience(experience)).replace('{skills}', experience.skills), [totalExperience])
+
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, experiences: experienceList } }))
+        setResumeInfo(current => ({ ...current, experiences: experienceList }))
     }, [experienceList, setResumeInfo])
 
     return (
@@ -131,8 +134,8 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
                                 <div className='sm:col-span-2'>
                                     <RichTextEditor name='workSummary' label='Work Summary'
                                         loading={loading} setLoading={(val) => setLoading(val)} value={experience.workSummary}
-                                        onInput={(name, value) => handleInput(name, value, key)} enable={!!(experience.title && experience.skills && experience.startDate && experience.endDate)}
-                                        prompt={PROMPT.replace('{title}', experience.title).replace('{experience}', getExperience(new Date(experience.startDate), new Date(experience.endDate))).replace('{skills}', experience.skills)} />
+                                        onInput={(name, value) => handleInput(name, value, key)} enable={enableAI(experience)}
+                                        prompt={finalPrompt(experience)} />
                                 </div>
                             </div>
 

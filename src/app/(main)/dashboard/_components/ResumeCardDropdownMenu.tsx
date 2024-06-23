@@ -9,20 +9,25 @@ import {
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Download, Loader2, Pen, Trash, View } from "lucide-react"
 import { useRouter } from "next13-progressbar"
-import { deleteResume } from "@/lib/actions/resume"
+import { deleteResume } from "@/lib/actions/resume-sanity"
 import { toast } from 'sonner'
 
-const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, resumeId: number }) => {
+const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, resumeId: string }) => {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
     const [open, setOpen] = useState(false)
 
     const action = useCallback(async () => {
-        setLoading(true)
-        await deleteResume(resumeId)
-        setLoading(false)
-        setOpen(false)
-        toast.success("Successfully deleted")
+        try {
+            setLoading(true)
+            await deleteResume(resumeId)
+            toast.success("Successfully deleted")
+        } catch (error) {
+            toast.error("Failed to deleted")
+        } finally {
+            setLoading(false)
+            setOpen(false)
+        }
     }, [resumeId])
 
 

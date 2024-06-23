@@ -1,8 +1,8 @@
-import { getResumes } from '@/lib/actions/resume'
 import dynamic from 'next/dynamic'
 import CardLoading from './_components/CardLoading'
 import { Metadata } from 'next'
 import { currentUser } from '@clerk/nextjs/server'
+import { getResumes } from '@/lib/actions/resume-sanity'
 
 const AddResume = dynamic(() => import('./_components/AddResume'), { ssr: false, loading: () => <CardLoading /> })
 const ResumeCard = dynamic(() => import('./_components/ResumeCard'), { ssr: true, loading: () => <CardLoading /> })
@@ -21,6 +21,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 }
 const DashboardPage = async () => {
   const resumes = await getResumes()
+  
   if (!resumes) {
     return null
   }
@@ -33,7 +34,7 @@ const DashboardPage = async () => {
         <AddResume />
         {
           resumes.map(resume => (
-            <ResumeCard key={resume.id} resume={resume} />
+            <ResumeCard key={resume._id} resume={resume} />
           ))
         }
       </div>

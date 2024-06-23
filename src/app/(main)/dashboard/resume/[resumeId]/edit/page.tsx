@@ -1,5 +1,5 @@
 
-import { getResume } from '@/lib/actions/resume'
+import { getResume } from '@/lib/actions/resume-sanity'
 import React from 'react'
 import EditResumeProvider from '../_components/providers/EditResumeProvider';
 import dynamic from 'next/dynamic';
@@ -13,8 +13,8 @@ export const generateMetadata = async ({ params: { resumeId } }: { params: { res
     const resume = await getResume(resumeId)
 
     return {
-        title: `${resume?.attributes.username} Edit Resume`,
-        description: `${resume?.attributes.username}'s edit resume section`
+        title: `${resume?.username} Edit Resume`,
+        description: `${resume?.username}'s edit resume section`
     }
 }
 

@@ -2,15 +2,15 @@
 
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
-import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import LoadingButton from '@/components/buttons/LoadingButton';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import RichTextEditor from '@/app/(main)/dashboard/resume/[resumeId]/edit/_components/RichTextEditor';
-import { TProject } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
+import { TProject } from '@/lib/types-sanity';
+import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TProject = {
     title: '',
@@ -28,7 +28,7 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
     const stack = useId()
 
     const [loading, setLoading] = useState(false)
-    const [projectsList, setProjectsList] = useState(resumeInfo.attributes.projects)
+    const [projectsList, setProjectsList] = useState(resumeInfo.projects)
 
     const handleInput = useCallback((e: FormEvent<HTMLInputElement>, index: number) => {
         const newEntries = projectsList.slice()
@@ -39,13 +39,13 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
     }, [enableNav, projectsList])
 
     console.log(projectsList[0]);
-    
+
 
     const handleDescription = useCallback((name: string, value: string, index: number) => {
         const newEntries = projectsList.slice()
         newEntries[index][name] = value
         console.log(newEntries[index]);
-        
+
         setProjectsList(newEntries)
         enableNav(false)
     }, [enableNav, projectsList])
@@ -62,10 +62,7 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
         e.preventDefault()
         setLoading(true)
         try {
-            const data = resumeInfo.attributes.projects.map(({ id, ...rest }) => ({ ...rest }))
-            console.log(data[0]);
-            
-            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, projects: data } });
+            await updateResume({ ...resumeInfo });
             toast.success("Successfully updated experience details.")
         } catch (error) {
             toast.error("Error updating experience details.")
@@ -75,8 +72,12 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
         }
     }, [enableNav, resumeInfo])
 
+    // const totalExperience = useCallback((experience: TEducation) => getExperience(new Date(experience.startDate), experience.currentlyWorking ? new Date() : new Date(experience.endDate)), [])
+    const enableAI = useCallback((project: TProject) => !!(project.title && project.stack), [])
+    const finalPrompt = useCallback((project: TProject) => PROMPT?.replace("{title}", project.title)?.replace("{stack}", project.stack), [])
+
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, projects: projectsList } }))
+        setResumeInfo(current => ({ ...current, projects: projectsList }))
     }, [projectsList, setResumeInfo])
 
     return (
@@ -105,8 +106,8 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
                                     <RichTextEditor name='description' label='Project Description' loading={loading}
                                         setLoading={(val) => setLoading(val)} value={project.description}
                                         onInput={(name, value) => handleDescription(name, value, key)}
-                                        prompt={PROMPT?.replace("{title}", project.title)?.replace("{stack}", project.stack)}
-                                        enable={!!(project.title && project.stack)} />
+                                        prompt={finalPrompt(project)}
+                                        enable={enableAI(project)} />
                                 </div>
                             </div>
 

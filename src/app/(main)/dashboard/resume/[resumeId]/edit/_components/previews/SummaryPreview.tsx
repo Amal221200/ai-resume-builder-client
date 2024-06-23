@@ -5,10 +5,10 @@ import { EditResumeContext, TEditResumeContext } from "../../../_components/prov
 
 const SummaryPreview = ({  }: { }) => {
 
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+    const { resumeInfo } = use(EditResumeContext) as TEditResumeContext;
     return (
         <p className="text-xs font-medium">
-            {resumeInfo.attributes?.summary}
+            {resumeInfo?.summary}
         </p>
     )
 }

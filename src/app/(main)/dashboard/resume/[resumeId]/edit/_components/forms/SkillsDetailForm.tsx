@@ -1,15 +1,15 @@
 "use client"
 
-import { TSkill } from '@/lib/types'
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
-import { updateResume } from '@/lib/actions/resume'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
 import { MinusIcon, PlusIcon } from 'lucide-react'
 import LoadingButton from '@/components/buttons/LoadingButton'
 import { Input } from '@/components/ui/input'
+import { TSkill } from '@/lib/types-sanity'
+import { updateResume } from '@/lib/actions/resume-sanity'
 
 const formField: TSkill = {
   name: "",
@@ -20,7 +20,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const name = useId()
 
   const [loading, setLoading] = useState(false)
-  const [skillsList, setSkillsList] = useState(resumeInfo.attributes.skills)
+  const [skillsList, setSkillsList] = useState(resumeInfo.skills)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
     const newEntries = skillsList.slice()
@@ -42,8 +42,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     setLoading(true)
 
     try {
-      const data = resumeInfo.attributes.skills.map(({ id, ...rest }) => ({ ...rest }))
-      await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, skills: data } });
+      await updateResume({ ...resumeInfo});
       toast.success("Successfully updated education details.")
     } catch (error) {
       toast.error("Error updating education details.")
@@ -54,7 +53,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   }, [resumeInfo, enableNav])
 
   useEffect(() => {
-    setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, skills: skillsList } }))
+    setResumeInfo(current => ({ ...current, skills: skillsList }))
   }, [skillsList, setResumeInfo])
 
   return (

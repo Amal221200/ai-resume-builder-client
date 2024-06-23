@@ -49,7 +49,6 @@ export async function updateResume(resume: TResume): Promise<TResume | undefined
         if (!user) {
             redirect('/auth/sign-in')
         }
-        // console.log(resume);
 
         const response = await axiosClient.put(`${ENDPOINT}/${resume.id}`, {
             data: { ...resume.attributes }

@@ -3,14 +3,14 @@
 import { Input } from '@/components/ui/input';
 import React, { FormEvent, use, useCallback, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
-import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import LoadingButton from '@/components/buttons/LoadingButton';
+import { updateResume } from '@/lib/actions/resume-sanity';
 
 const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
     const handleInput = (e: FormEvent<HTMLInputElement>) => {
-        setResumeInfo({ ...resumeInfo, attributes: { ...resumeInfo.attributes, [e.currentTarget.name]: e.currentTarget.value } })
+        setResumeInfo({ ...resumeInfo, [e.currentTarget.name]: e.currentTarget.value })
         enableNav(false)
     }
 
@@ -45,27 +45,27 @@ const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }
                 <div className='mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2'>
                     <div>
                         <label className='text-sm' htmlFor={firstName}>First Name</label>
-                        <Input placeholder='firstName' id={firstName} required name='firstName' defaultValue={resumeInfo.attributes?.firstName ?? ''} onInput={handleInput} />
+                        <Input placeholder='firstName' id={firstName} required name='firstName' defaultValue={resumeInfo?.firstName ?? ''} onInput={handleInput} />
                     </div>
                     <div>
                         <label className='text-sm' htmlFor={lastName}>Last Name</label>
-                        <Input placeholder='lastName' id={lastName} required name='lastName' defaultValue={resumeInfo.attributes?.lastName ?? ''} onInput={handleInput} />
+                        <Input placeholder='lastName' id={lastName} required name='lastName' defaultValue={resumeInfo?.lastName ?? ''} onInput={handleInput} />
                     </div>
                     <div className='sm:col-span-2'>
                         <label className='text-sm' htmlFor={jobTitle}>Job Title</label>
-                        <Input placeholder='jobTitle' id={jobTitle} required name='jobTitle' defaultValue={resumeInfo.attributes?.jobTitle ?? ''} onInput={handleInput} />
+                        <Input placeholder='jobTitle' id={jobTitle} required name='jobTitle' defaultValue={resumeInfo?.jobTitle ?? ''} onInput={handleInput} />
                     </div>
                     <div className='sm:col-span-2'>
                         <label className='text-sm' htmlFor={address}>Address</label>
-                        <Input placeholder='address' id={address} required name='address' defaultValue={resumeInfo.attributes?.address ?? ''} onInput={handleInput} />
+                        <Input placeholder='address' id={address} required name='address' defaultValue={resumeInfo?.address ?? ''} onInput={handleInput} />
                     </div>
                     <div>
                         <label className='text-sm' htmlFor={phone}>Phone</label>
-                        <Input placeholder='phone' id={phone} required name='phone' defaultValue={resumeInfo.attributes?.phone ?? ''} onInput={handleInput} />
+                        <Input placeholder='phone' id={phone} required name='phone' defaultValue={resumeInfo?.phone ?? ''} onInput={handleInput} />
                     </div>
                     <div>
                         <label className='text-sm' htmlFor={email}>Email</label>
-                        <Input placeholder='email' id={email} type='email' required name='email' defaultValue={resumeInfo.attributes?.email ?? ''} onInput={handleInput} />
+                        <Input placeholder='email' id={email} type='email' required name='email' defaultValue={resumeInfo?.email ?? ''} onInput={handleInput} />
                     </div>
                 </div>
                 <div className='mt-3 flex justify-end'>

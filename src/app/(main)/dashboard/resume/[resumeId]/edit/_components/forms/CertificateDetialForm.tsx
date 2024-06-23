@@ -1,8 +1,6 @@
 "use client"
-import { TCertificate } from '@/lib/types'
 import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
-import { updateResume } from '@/lib/actions/resume'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -10,6 +8,8 @@ import { MinusIcon, PlusIcon } from 'lucide-react'
 import LoadingButton from '@/components/buttons/LoadingButton'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { updateResume } from '@/lib/actions/resume-sanity'
+import { TCertificate } from '@/lib/types-sanity'
 
 const formField: TCertificate = {
   title: "",
@@ -26,7 +26,7 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
   const description = useId()
 
   const [loading, setLoading] = useState(false)
-  const [certificatesList, setCertificatesList] = useState(resumeInfo.attributes.certificates)
+  const [certificatesList, setCertificatesList] = useState(resumeInfo.certificates)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
     const newEntries = certificatesList.slice()
@@ -48,8 +48,7 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
     setLoading(true)
 
     try {
-      const data = resumeInfo.attributes.certificates.map(({ id, ...rest }) => ({ ...rest }))
-      await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, certificates: data } });
+      await updateResume({ ...resumeInfo });
       toast.success("Successfully updated education details.")
     } catch (error) {
       toast.error("Error updating education details.")
@@ -60,7 +59,7 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
   }, [resumeInfo, enableNav])
 
   useEffect(() => {
-    setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, certificates: certificatesList } }))
+    setResumeInfo(current => ({ ...current, certificates: certificatesList }))
   }, [certificatesList, setResumeInfo])
 
   return (

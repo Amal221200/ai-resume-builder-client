@@ -13,15 +13,15 @@ const ExperiencePreview = ({ }: {}) => {
   return (
     <div className="my-3">
       <h3 className="mb-1 text-center text-sm font-bold" style={{
-        color: resumeInfo.attributes?.themeColor
+        color: "#222"
       }}>Professional Experience</h3>
 
-      <Separator className='h-[1.5px]' style={{ backgroundColor: resumeInfo.attributes?.themeColor }} />
+      <Separator className='h-[1.5px]' style={{ backgroundColor: "#222" }} />
 
       {
-        resumeInfo.attributes.experiences.map((experience, index) => (
+        resumeInfo.experiences.map((experience, index) => (
           <div key={index} className='my-3'>
-            <h6 style={{ color: resumeInfo.attributes?.themeColor }} className='text-sm font-bold'>{experience.title}</h6>
+            <h6 style={{ color: "#222" }} className='text-sm font-bold'>{experience.title}</h6>
             <p className='flex justify-between text-sm'>
               {experience.companyName}{(experience.companyName && experience.city) && `,`} {experience.city}{experience.city && experience.state && `,`} {experience.state}
               <span>

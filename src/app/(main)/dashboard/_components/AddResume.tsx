@@ -1,5 +1,5 @@
 "use client"
-import { Loader, Loader2, PlusSquareIcon } from 'lucide-react'
+import {  Loader2, PlusSquareIcon } from 'lucide-react'
 import {
     AlertDialog,
     AlertDialogContent,
@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Input } from '@/components/ui/input'
 import { useCallback, useState } from 'react'
-import { createResume } from '@/lib/actions/resume'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next13-progressbar'
 import { useUser } from '@clerk/nextjs'
+import { createResume } from '@/lib/actions/resume-sanity'
 
 const AddResume = () => {
 
@@ -37,7 +37,7 @@ const AddResume = () => {
         try {
             setLoading(true)
             const response = await createResume(resumeTitle)
-            router.push(`/dashboard/resume/${response?.id!}/edit`)
+            router.push(`/dashboard/resume/${response?._id}/edit`)
             toast.success('Successfully created')
         } catch (error) {
             toast.error('Unable to create resume')

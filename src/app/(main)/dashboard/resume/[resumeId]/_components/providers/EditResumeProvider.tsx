@@ -1,5 +1,5 @@
 "use client"
-import { TResume } from "@/lib/types"
+import { TResume } from "@/lib/types-sanity"
 import { createContext, Dispatch, ReactNode, SetStateAction, useState } from "react"
 
 export type TEditResumeContext = {resumeInfo: TResume, setResumeInfo: Dispatch<SetStateAction<TResume>>}

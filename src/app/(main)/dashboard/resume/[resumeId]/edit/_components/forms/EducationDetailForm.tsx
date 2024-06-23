@@ -1,16 +1,16 @@
 "use client"
 import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
-import { updateResume } from '@/lib/actions/resume';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import LoadingButton from '@/components/buttons/LoadingButton';
 import { MinusIcon, PlusIcon } from 'lucide-react';
-import { TEducation } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
+import { TEducation } from '@/lib/types-sanity';
+import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TEducation = {
     degree: '',
@@ -33,7 +33,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     const currentlyStuding = useId()
 
     const [loading, setLoading] = useState(false)
-    const [educationList, setEducationList] = useState(resumeInfo.attributes.educations)
+    const [educationList, setEducationList] = useState(resumeInfo.educations)
 
     const handleInput = useCallback((name: string, value: string | boolean, index: number) => {
         const newEntries = educationList.slice()
@@ -54,8 +54,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
         e.preventDefault()
         setLoading(true)
         try {
-            const data = resumeInfo.attributes.educations.map(({ id, ...rest }) => ({ ...rest }))
-            await updateResume({ ...resumeInfo, attributes: { ...resumeInfo.attributes, educations: data } });
+            await updateResume({ ...resumeInfo });
             toast.success("Successfully updated education details.")
         } catch (error) {
             toast.error("Error updating education details.")
@@ -66,9 +65,8 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     }, [enableNav, resumeInfo])
 
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, attributes: { ...current.attributes, educations: educationList } }))
+        setResumeInfo(current => ({ ...current, educations: educationList }))
     }, [educationList, setResumeInfo])
-
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
