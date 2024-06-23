@@ -23,7 +23,7 @@ export async function getResumes(): Promise<TResume[] | undefined> {
 
         return response.data.data
     } catch (error) {
-        console.log(error);
+        throw new Error("504")
     }
 }
 
@@ -38,7 +38,7 @@ export async function getResume(resumeId: string): Promise<TResume | undefined> 
         const response = await axiosClient.get(`${ENDPOINT}/${resumeId}?populate=*`)
         return response.data.data
     } catch (error) {
-        console.log(error);
+        throw new Error("504")
     }
 }
 
@@ -102,6 +102,5 @@ export async function createResume(title: string): Promise<TResume | undefined> 
         return response.data.data
     } catch (error) {
         console.log(error);
-
     }
 }

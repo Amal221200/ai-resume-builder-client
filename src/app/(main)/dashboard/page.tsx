@@ -3,8 +3,6 @@ import dynamic from 'next/dynamic'
 import CardLoading from './_components/CardLoading'
 import { Metadata } from 'next'
 import { currentUser } from '@clerk/nextjs/server'
-import { ServerCrash } from 'lucide-react'
-import { redirect, } from 'next/navigation'
 
 const AddResume = dynamic(() => import('./_components/AddResume'), { ssr: false, loading: () => <CardLoading /> })
 const ResumeCard = dynamic(() => import('./_components/ResumeCard'), { ssr: true, loading: () => <CardLoading /> })
@@ -24,7 +22,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const DashboardPage = async () => {
   const resumes = await getResumes()
   if (!resumes) {
-    throw new Error("504")
+    return null
   }
   
   return (

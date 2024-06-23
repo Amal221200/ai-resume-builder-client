@@ -2,15 +2,7 @@
 import { ServerCrash } from 'lucide-react'
 
 const ErrorPage = ({ error }: { error: any }) => {
-    if (error.message !== "504") {
-        return (
-            <main className="grid h-[85vh] place-content-center gap-y-2 p-3">
-                <h1 className='flex items-center justify-center gap-x-2 text-xl font-medium text-red-800 md:text-3xl'>
-                    <ServerCrash /> Internal Server Error
-                </h1>
-            </main>
-        )
-    }
+  
     return (
         <main className="grid h-[85vh] place-content-center gap-y-2 p-3">
             <h1 className='flex items-center justify-center gap-x-2 text-xl font-medium text-red-800 md:text-3xl'>
