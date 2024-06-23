@@ -16,6 +16,7 @@ export async function getResumes(): Promise<TResume[] | undefined> {
         if (!user) {
             redirect('/auth/sign-in')
         }
+        
         const email = user.emailAddresses[0].emailAddress
 
         const response = await axiosClient.get(`${ENDPOINT}?filters[user_email][$eq]=${email}&sort[0]=updatedAt:desc`)
@@ -23,7 +24,6 @@ export async function getResumes(): Promise<TResume[] | undefined> {
         return response.data.data
     } catch (error) {
         console.log(error);
-
     }
 }
 

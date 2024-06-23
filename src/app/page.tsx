@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { ArrowRight, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, } from "next/navigation";
 
 export default async function Home() {
   const user = auth()
@@ -15,7 +15,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <section className="z-50 flex min-h-[70vh] items-center justify-center">
+      <main className="z-50 flex min-h-[70vh] items-center justify-center">
         <div className="mx-auto max-w-screen-xl px-4 py-8 text-center lg:px-12 lg:py-16">
           <Link href="/auth/sign-in" className="mb-7 inline-flex items-center justify-between rounded-full bg-gray-100 px-1 py-1 pr-4 text-sm text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700" role="alert">
             <span className="mr-3 rounded-full bg-primary px-4 py-1.5 text-xs text-white dark:bg-gray-500">New</span> <span className="text-sm font-medium">AI Resume Builder</span>
@@ -33,7 +33,7 @@ export default async function Home() {
             </Button>
           </div>
         </div>
-      </section>
+      </main>
     </>
   );
 }

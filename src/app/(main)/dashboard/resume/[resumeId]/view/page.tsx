@@ -18,7 +18,7 @@ const ViewResumePage = async ({ params: { resumeId } }: { params: { resumeId: st
     const resume = await getResume(resumeId)
 
     if (!resume) {
-        return
+        throw new Error("504")
     }
     return (
         <EditResumeProvider resume={resume}>
