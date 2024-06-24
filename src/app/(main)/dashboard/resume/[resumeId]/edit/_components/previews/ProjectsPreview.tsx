@@ -9,7 +9,7 @@ const ProjectsPreview = ({ }: {}) => {
 
   return (
     <div className="my-3">
-      <h3 className="mb-1 text-center text-sm font-bold" style={{
+      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm" style={{
         color: "#222"
       }}>Projects</h3>
 
@@ -17,16 +17,15 @@ const ProjectsPreview = ({ }: {}) => {
 
       {
         resumeInfo.projects.map((project, index) => (
-          <div key={index} className='my-3'>
-            <div className='flex items-center gap-2'>
-              <h6 style={{ color: "#222" }} className='text-sm font-bold'>{project.title}</h6>
+          <div key={index} className='my-1 sm:my-3'>
+            <div className='flex items-center gap-x-1 sm:gap-x-2'>
+              <h6 style={{ color: "#222" }} className='text-[9px] font-bold sm:text-sm'>{project.title}</h6>
               {
-               project.link && <Link href={project.link} target='_blank' className='text-xs font-medium text-blue-700'>Link</Link>
+               project.link && <Link href={project.link} target='_blank' className='text-[7px] font-medium text-blue-700 sm:text-xs'>Link</Link>
               }
             </div>
-            <small className='text-[11px]'>{project.stack}</small>
-
-            <div className='experience-work-summary my-2 text-sm' dangerouslySetInnerHTML={{ __html: project.description }} />
+            <p className='text-[8px] sm:text-[11px]'>{project.stack}</p>
+            <div className='experience-work-summary my-1 text-[9px] sm:my-2 sm:text-sm' dangerouslySetInnerHTML={{ __html: project.description }} />
           </div>
         ))
       }

@@ -7,7 +7,7 @@ const SummaryPreview = ({  }: { }) => {
 
     const { resumeInfo } = use(EditResumeContext) as TEditResumeContext;
     return (
-        <p className="text-xs font-medium">
+        <p className="text-[8px] font-medium sm:text-xs">
             {resumeInfo?.summary}
         </p>
     )

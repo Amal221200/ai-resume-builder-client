@@ -12,7 +12,7 @@ const ExperiencePreview = ({ }: {}) => {
   const validEndDate = useCallback((experience: TExperience) => experience.endDate && formatDate(new Date(experience.endDate)), [])
   return (
     <div className="my-3">
-      <h3 className="mb-1 text-center text-sm font-bold" style={{
+      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm" style={{
         color: "#222"
       }}>Professional Experience</h3>
 
@@ -21,15 +21,15 @@ const ExperiencePreview = ({ }: {}) => {
       {
         resumeInfo.experiences.map((experience, index) => (
           <div key={index} className='my-3'>
-            <h6 style={{ color: "#222" }} className='text-sm font-bold'>{experience.title}</h6>
-            <p className='flex justify-between text-sm'>
+            <h6 style={{ color: "#222" }} className='text-[9px] font-bold sm:text-sm'>{experience.title}</h6>
+            <p className='flex justify-between text-[9px] sm:text-sm'>
               {experience.companyName}{(experience.companyName && experience.city) && `,`} {experience.city}{experience.city && experience.state && `,`} {experience.state}
               <span>
                 {validStartDate(experience)} {((experience.currentlyWorking) || experience.endDate) && "-"} {experience.currentlyWorking ? "Present" : validEndDate(experience)}
               </span>
             </p>
             
-            <div className='experience-work-summary my-2 text-sm' dangerouslySetInnerHTML={{ __html: experience.workSummary }} />
+            <div className='experience-work-summary my-2 text-[9px] sm:text-sm' dangerouslySetInnerHTML={{ __html: experience.workSummary }} />
           </div>
         ))
       }

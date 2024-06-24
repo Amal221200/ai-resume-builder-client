@@ -9,7 +9,7 @@ const CertificatesPreview = ({ }: {}) => {
 
   return (
     <div className="my-3">
-      <h3 className="mb-1 text-center text-sm font-bold" style={{
+      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm" style={{
         color: "#222"
       }}>Certificates</h3>
 
@@ -18,16 +18,16 @@ const CertificatesPreview = ({ }: {}) => {
         resumeInfo.certificates.map((certificate, index) => (
           <div key={index} className='my-3'>
             <div className='flex items-center gap-2'>
-              <h6 style={{ color: "#222" }} className='text-sm font-bold'>{certificate.title}</h6>
+              <h6 style={{ color: "#222" }} className='text-[9px] font-bold sm:text-sm'>{certificate.title}</h6>
               {
-                certificate.link && <Link href={certificate.link} target='_blank' className='text-xs font-medium text-blue-700'>Link</Link>
+                certificate.link && <Link href={certificate.link} target='_blank' className='text-[7px] font-medium text-blue-700 sm:text-xs'>Link</Link>
               }
             </div>
-              <p className='text-xs'>
+              <p className='text-[7px] sm:text-xs'>
                 {certificate.provider}
               </p>
             {certificate.description &&
-              <p className='my-2 text-sm'>
+              <p className='my-2 text-[9px] sm:text-sm'>
                 {certificate.description}
               </p>
             }

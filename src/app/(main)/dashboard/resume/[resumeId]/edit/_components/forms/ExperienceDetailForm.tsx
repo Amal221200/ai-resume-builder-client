@@ -72,7 +72,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
     }, [enableNav, resumeInfo])
 
     const totalExperience = useCallback((experience: TExperience) => getExperience(new Date(experience.startDate), experience.currentlyWorking ? new Date() : new Date(experience.endDate)), [])
-    const enableAI = useCallback((experience: TExperience) => !!(experience.title && experience.skills && experience.startDate && experience.endDate), [])
+    const enableAI = useCallback((experience: TExperience) => !!(experience.title && experience.skills && experience.startDate && (experience.currentlyWorking || experience.endDate)), [])
     const finalPrompt = useCallback((experience: TExperience) => PROMPT.replace('{title}', experience.title).replace('{experience}', totalExperience(experience)).replace('{skills}', experience.skills), [totalExperience])
 
     useEffect(() => {

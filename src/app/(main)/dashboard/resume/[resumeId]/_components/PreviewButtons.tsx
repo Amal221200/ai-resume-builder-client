@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useCallback } from 'react'
 import { RWebShare } from "react-web-share"
@@ -13,9 +14,16 @@ const PreviewButtons = () => {
 
   return (
     <div className='my-3 flex justify-between' id='no-print'>
-      <Button type='button' variant="btn" onClick={handleDownload}>
-        Download
-      </Button>
+      <div className='space-x-2'>
+        <Button type='button' variant="btn" onClick={handleDownload}>
+          Download
+        </Button>
+        <Button asChild variant="outline" className='border border-primary-btn text-primary-btn'>
+          <Link href={`/dashboard/resume/${resumeId}/edit`}>
+            Go to Edit
+          </Link>
+        </Button>
+      </div>
 
       <RWebShare
         data={{
