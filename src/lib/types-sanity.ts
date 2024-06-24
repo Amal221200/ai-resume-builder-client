@@ -25,6 +25,7 @@ export type TResume = {
 export type TProject = {
     [index: string]: unknown,
     _key?: string,
+    _type:"project",
     title: string,
     link: string,
     stack: string,
@@ -33,6 +34,7 @@ export type TProject = {
 
 export type TCertificate = {
     [index: string]: unknown,
+    _type:"certificate",
     _key?: string,
     title: string,
     link: string,
@@ -42,6 +44,7 @@ export type TCertificate = {
 
 export type TSkill = {
     [index: string]: unknown,
+    _type:"skill",
     _key?: string,
     name: string,
 }
@@ -49,6 +52,7 @@ export type TSkill = {
 export type TEducation = {
     [index: string]: unknown,
     _key?: string,
+    _type?: "education",
     universityName: string,
     startDate: string,
     endDate: string,
@@ -60,6 +64,7 @@ export type TEducation = {
 
 export type TExperience = {
     [index: string]: unknown,
+    _type:"experience",
     _key?: string,
     title: string,
     companyName: string,

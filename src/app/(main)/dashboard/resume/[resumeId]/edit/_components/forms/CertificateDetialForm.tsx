@@ -12,6 +12,7 @@ import { updateResume } from '@/lib/actions/resume-sanity'
 import { TCertificate } from '@/lib/types-sanity'
 
 const formField: TCertificate = {
+  _type:"certificate",
   title: "",
   link: "",
   provider: "",

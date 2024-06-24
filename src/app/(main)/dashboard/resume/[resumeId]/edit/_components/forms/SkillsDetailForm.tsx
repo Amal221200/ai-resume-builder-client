@@ -12,12 +12,14 @@ import { TSkill } from '@/lib/types-sanity'
 import { updateResume } from '@/lib/actions/resume-sanity'
 
 const formField: TSkill = {
+  _type:"skill",
   name: "",
 }
 
 const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
   const name = useId()
+console.log(resumeInfo);
 
   const [loading, setLoading] = useState(false)
   const [skillsList, setSkillsList] = useState(resumeInfo.skills)

@@ -15,6 +15,7 @@ import { TExperience } from '@/lib/types-sanity';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TExperience = {
+    _type:"experience",
     title: '',
     companyName: '',
     city: '',

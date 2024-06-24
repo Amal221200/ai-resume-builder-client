@@ -13,6 +13,7 @@ import { TEducation } from '@/lib/types-sanity';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TEducation = {
+    _type:"education",
     degree: '',
     universityName: '',
     major: '',

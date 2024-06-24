@@ -30,7 +30,7 @@ export async function getResume(resumeId: string): Promise<TResume> {
     }
 
     const response = await sanity.fetch<TResume>(`*[_type=="resume" && _id==$resumeId][0]`, { resumeId }, {
-        cache: "force-cache"
+        cache: "no-store"
     })
 
     return response
