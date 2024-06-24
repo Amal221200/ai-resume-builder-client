@@ -8,7 +8,7 @@ import LoadingButton from '@/components/buttons/LoadingButton';
 import { generateAISummary } from '@/lib/actions/gemini_ai';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
-const PROMPT = `Job Title: {jobTitle}, Depends on job title give me list of summary for 3 experience level:- Senior Level, Mid Level and Freasher level in 3-4 lines in array format, with summary and experience_level Field in JSON Format`
+const PROMPT = `Job Title: {jobTitle}, Depends on job title give me list of  ATS friendly summary for 3 experience level:- Senior Level, Mid Level and Freasher level in 3-4 lines in array format, with summary and experience_level Field in JSON Format`
 
 const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;

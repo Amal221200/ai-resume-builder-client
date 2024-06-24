@@ -12,16 +12,14 @@ const ExperiencePreview = ({ }: {}) => {
   const validEndDate = useCallback((experience: TExperience) => experience.endDate && formatDate(new Date(experience.endDate)), [])
   return (
     <div className="my-3">
-      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm" style={{
-        color: "#222"
-      }}>Professional Experience</h3>
+      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm">Professional Experience</h3>
 
-      <Separator className='h-[1.5px]' style={{ backgroundColor: "#222" }} />
+      <Separator className='h-[1.5px]' />
 
       {
         resumeInfo.experiences.map((experience, index) => (
           <div key={index} className='my-3'>
-            <h6 style={{ color: "#222" }} className='text-[9px] font-bold sm:text-sm'>{experience.title}</h6>
+            <h6 className='text-[9px] font-bold sm:text-sm'>{experience.title}</h6>
             <p className='flex justify-between text-[9px] sm:text-sm'>
               {experience.companyName}{(experience.companyName && experience.city) && `,`} {experience.city}{experience.city && experience.state && `,`} {experience.state}
               <span>

@@ -12,16 +12,14 @@ const EducationPreview = ({ }: {}) => {
   
   return (
     <div className="my-3">
-      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm" style={{
-        color: "#222"
-      }}>Education</h3>
+      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm">Education</h3>
 
       <Separator className='h-[1.5px]' style={{ backgroundColor: "#222" }} />
 
       {
         resumeInfo.educations.map((education, index) => (
           <div key={index} className='my-3'>
-            <h6 style={{ color: "#222" }} className='text-[9px] font-bold sm:text-sm'>{education.universityName}</h6>
+            <h6 className='text-[9px] font-bold sm:text-sm'>{education.universityName}</h6>
             <p className='flex justify-between text-[9px] sm:text-sm'>
               {education.degree} {(education.degree && education.major) && "in"} {education.major}
               <span>{validStartDate(education)} {(education?.currentlyStudying || education?.endDate) && "-"} {education?.currentlyStudying ? "Present" : validEndDate(education)}</span>

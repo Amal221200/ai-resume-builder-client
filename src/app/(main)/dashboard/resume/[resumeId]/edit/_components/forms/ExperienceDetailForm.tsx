@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useMemo, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useEffect, useId, useMemo, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -27,7 +27,7 @@ const formField: TExperience = {
     currentlyWorking: false
 }
 
-const PROMPT = 'position titile: {title}, experience: {experience}, skills: {skills}, depends on position title, skills, and given experience, give me 5-7 bullet points for my experience in resume (Please do not add experince level and No JSON array), give me result in HTML unordered list.'
+const PROMPT = 'position titile: {title}, experience: {experience}, skills: {skills}, depends on position title, skills, and given experience, give me 5-7 ATS friendly bullet points for my experience in resume (Please do not add experince level and No JSON array), give me result in HTML unordered list.'
 
 const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;

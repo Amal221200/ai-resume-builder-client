@@ -1,6 +1,6 @@
 "use client"
 
-import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
@@ -19,7 +19,6 @@ const formField: TSkill = {
 const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
   const name = useId()
-console.log(resumeInfo);
 
   const [loading, setLoading] = useState(false)
   const [skillsList, setSkillsList] = useState(resumeInfo.skills)

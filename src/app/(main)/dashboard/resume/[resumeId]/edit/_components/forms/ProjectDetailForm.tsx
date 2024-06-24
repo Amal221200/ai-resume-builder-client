@@ -1,6 +1,5 @@
 "use client"
-
-import React, { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -20,7 +19,7 @@ const formField: TProject = {
     description: ''
 }
 
-const PROMPT = "Write a few line of description about a project of title : {title}, developed by implementing the following stack. The lines should be in the form of HTML unordered list."
+const PROMPT = "Write a few line of  ATS friendly description about a project of title : {title}, developed by implementing the following {stack}. The lines should be in the form of HTML unordered list."
 
 const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;

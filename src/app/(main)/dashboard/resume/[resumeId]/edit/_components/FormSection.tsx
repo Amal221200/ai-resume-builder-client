@@ -18,24 +18,17 @@ const CertificateDetailForm = dynamic(() => import('./forms/CertificateDetialFor
 
 const FormSection = () => {
     const { resumeId } = useParams()
-    const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step`) ?? '1'))
+    const [activeForm, setActiveForm] = useState(parseInt(localStorage.getItem(`step-${resumeId}`) ?? '1'))
     const [enableNav, setEnableNav] = useState(true)
     const onNext = useCallback(() => {
         setActiveForm((current) => current + 1)
-        localStorage.setItem(`step`, (activeForm + 1).toString())
-    }, [activeForm])
+        localStorage.setItem(`step-${resumeId}`, (activeForm + 1).toString())
+    }, [activeForm, resumeId])
 
     const onPrevious = useCallback(() => {
         setActiveForm((current) => current - 1)
-        localStorage.setItem(`step`, (activeForm - 1).toString())
-    }, [activeForm])
-
-    useEffect(() => {
-
-        return () => {
-            localStorage.removeItem('step')
-        }
-    }, [])
+        localStorage.setItem(`step-${resumeId}`, (activeForm - 1).toString())
+    }, [activeForm, resumeId])
 
     return (
         <div id='no-print' className='no-scrollbar h-[85vh] overflow-auto'>

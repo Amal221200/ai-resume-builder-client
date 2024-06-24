@@ -9,17 +9,15 @@ const ProjectsPreview = ({ }: {}) => {
 
   return (
     <div className="my-3">
-      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm" style={{
-        color: "#222"
-      }}>Projects</h3>
+      <h3 className="mb-1 text-center text-[9px] font-bold sm:text-sm">Projects</h3>
 
-      <Separator className='h-[1.5px]' style={{ backgroundColor: "#222" }} />
+      <Separator className='h-[1.5px]' />
 
       {
         resumeInfo.projects.map((project, index) => (
           <div key={index} className='my-1 sm:my-3'>
             <div className='flex items-center gap-x-1 sm:gap-x-2'>
-              <h6 style={{ color: "#222" }} className='text-[9px] font-bold sm:text-sm'>{project.title}</h6>
+              <h6 className='text-[9px] font-bold sm:text-sm'>{project.title}</h6>
               {
                project.link && <Link href={project.link} target='_blank' className='text-[7px] font-medium text-blue-700 sm:text-xs'>Link</Link>
               }
