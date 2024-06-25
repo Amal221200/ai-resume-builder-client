@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useId, useState } from 'react'
 import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
@@ -13,7 +13,7 @@ import { updateResume } from '@/lib/actions/resume-sanity'
 const formField: TLink = {
   _type: "link",
   label: "",
-  url:''
+  url: ''
 }
 
 const LinksDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
@@ -22,22 +22,24 @@ const LinksDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const url = useId()
 
   const [loading, setLoading] = useState(false)
-  const [linksList, setLinksList] = useState(resumeInfo.links)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
-    const newEntries = linksList.slice()
+    const newEntries = resumeInfo.links.slice()
     newEntries[index][name] = value
-    setLinksList(newEntries)
+    resumeInfoDispatch({ action: ResumeActions.LINKS, payload: { links: newEntries } })
     enableNav(false)
-  }, [linksList, enableNav])
+  }, [enableNav, resumeInfo, resumeInfoDispatch])
 
   const handleAddMore = useCallback(() => {
-    setLinksList(current => [...current, { ...formField }])
-  }, [])
+    const links = resumeInfo.links.slice()
+    resumeInfoDispatch({ action: ResumeActions.LINKS, payload: { links: [...links, { ...formField }] } })
+  }, [resumeInfo.links, resumeInfoDispatch])
 
   const handleRemove = useCallback((index: number) => {
-    setLinksList(current => [...current.slice(0, index), ...current.slice(index + 1)])
-  }, [])
+    const links = resumeInfo.links.slice()
+    resumeInfoDispatch({ action: ResumeActions.LINKS, payload: { links: [...links.slice(0, index), ...links.slice(index + 1)] } })
+    enableNav(false)
+  }, [resumeInfo.links, resumeInfoDispatch, enableNav])
 
   const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -54,16 +56,12 @@ const LinksDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     }
   }, [resumeInfo, enableNav])
 
-  useEffect(() => {
-    resumeInfoDispatch({ action: ResumeActions.LINKS, payload: { links: linksList } })
-  }, [linksList, resumeInfoDispatch])
-
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
       <h2 className='text-base font-bold sm:text-lg'>Links (Recommended)</h2>
       <p className='text-sm sm:text-base'>Add Your Links</p>
       <form onSubmit={onSubmit}>
-        {linksList.map((link, key) => (
+        {resumeInfo.links.map((link, key) => (
           <Fragment key={key}>
             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
@@ -80,7 +78,7 @@ const LinksDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
                 <MinusIcon className='h-4 w-4' /> Remove
               </Button>
             </div>
-            {(linksList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
+            {(resumeInfo.links.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
           </Fragment>
         ))
         }

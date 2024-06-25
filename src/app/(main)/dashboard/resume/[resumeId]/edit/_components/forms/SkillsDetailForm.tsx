@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useId, useState } from 'react'
 import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
@@ -20,27 +20,33 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const name = useId()
 
   const [loading, setLoading] = useState(false)
-  const [skillsList, setSkillsList] = useState(resumeInfo.skills)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
-    const newEntries = skillsList.slice()
+    const newEntries = resumeInfo.skills.slice()
     newEntries[index][name] = value
-    setSkillsList(newEntries)
+    resumeInfoDispatch({ action: ResumeActions.SKILLS, payload: { skills: newEntries } })
     enableNav(false)
-  }, [skillsList, enableNav])
+  }, [resumeInfo.skills, enableNav, resumeInfoDispatch])
 
   const handleAddMore = useCallback(() => {
-    setSkillsList(current => [...current, { ...formField }])
-  }, [])
+    const skills = resumeInfo.skills.slice()
+    resumeInfoDispatch({ action: ResumeActions.SKILLS, payload: { skills: [...skills, { ...formField }] } })
+  }, [resumeInfo.skills, resumeInfoDispatch])
 
   const handleRemove = useCallback((index: number) => {
-    setSkillsList(current => [...current.slice(0, index), ...current.slice(index + 1)])
-  }, [])
+    const skills = resumeInfo.skills.slice()
+    resumeInfoDispatch({
+      action: ResumeActions.SKILLS,
+      payload: {
+        skills: [...skills.slice(0, index), ...skills.slice(index + 1)]
+      }
+    })
+    enableNav(false)
+  }, [resumeInfo.skills, resumeInfoDispatch, enableNav])
 
   const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-
     try {
       await updateResume({ ...resumeInfo });
       toast.success("Successfully updated education details.")
@@ -52,16 +58,12 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     }
   }, [resumeInfo, enableNav])
 
-  useEffect(() => {
-    resumeInfoDispatch({ action: ResumeActions.SKILLS, payload: { skills: skillsList } })
-  }, [skillsList, resumeInfoDispatch])
-
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
       <h2 className='text-base font-bold sm:text-lg'>Skills (Recommended)</h2>
       <p className='text-sm sm:text-base'>Add Your Skills</p>
       <form onSubmit={onSubmit}>
-        {skillsList.map((skill, key) => (
+        {resumeInfo.skills.map((skill, key) => (
           <Fragment key={key}>
             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
@@ -74,7 +76,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
                 <MinusIcon className='h-4 w-4' /> Remove
               </Button>
             </div>
-            {(skillsList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
+            {(resumeInfo.skills.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
           </Fragment>
         ))
         }

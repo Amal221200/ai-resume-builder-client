@@ -1,6 +1,5 @@
 "use client"
-
-import { FormEvent, Fragment, use, useCallback, useEffect, useId, useMemo, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useId, useState } from 'react'
 import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -31,6 +30,8 @@ const PROMPT = 'position titile: {title}, experience: {experience}, skills: {ski
 
 const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
+    const [loading, setLoading] = useState(false)
+
     const title = useId()
     const companyName = useId()
     const city = useId()
@@ -40,23 +41,23 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
     const skills = useId()
     const currentlyWorking = useId()
 
-    const [loading, setLoading] = useState(false)
-    const [experienceList, setExperienceList] = useState(resumeInfo.experiences)
-
     const handleInput = useCallback((name: string, value: string | boolean, index: number) => {
-        const newEntries = experienceList.slice()
+        const newEntries = resumeInfo.experiences.slice()
         newEntries[index][name] = value
-        setExperienceList(newEntries)
+        resumeInfoDispatch({ action: ResumeActions.EXPERIENCES, payload: { experiences: newEntries } })
         enableNav(false)
-    }, [enableNav, experienceList])
+    }, [enableNav, resumeInfo.experiences, resumeInfoDispatch])
 
     const handleAddMore = useCallback(() => {
-        setExperienceList(current => [...current, { ...formField }])
-    }, [])
+        const experiences = resumeInfo.experiences.slice()
+        resumeInfoDispatch({ action: ResumeActions.EXPERIENCES, payload: { experiences: [...experiences, { ...formField }] } })
+    }, [resumeInfoDispatch, resumeInfo.experiences])
 
     const handleRemove = useCallback((index: number) => {
-        setExperienceList(current => [...current.slice(0, index), ...current.slice(index + 1)])
-    }, [])
+        const experiences = resumeInfo.experiences.slice()
+        resumeInfoDispatch({ action: ResumeActions.EXPERIENCES, payload: { experiences: [...experiences.slice(0, index), ...experiences.slice(index + 1)] } })
+        enableNav(false)
+    }, [resumeInfo, resumeInfoDispatch, enableNav])
 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -76,9 +77,6 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
     const enableAI = useCallback((experience: TExperience) => !!(experience.title && experience.skills && experience.startDate && (experience.currentlyWorking || experience.endDate)), [])
     const finalPrompt = useCallback((experience: TExperience) => PROMPT.replace('{title}', experience.title).replace('{experience}', totalExperience(experience)).replace('{skills}', experience.skills), [totalExperience])
 
-    useEffect(() => {
-        resumeInfoDispatch({ action: ResumeActions.EXPERIENCES, payload: { experiences: experienceList } })
-    }, [experienceList, resumeInfoDispatch])
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
@@ -86,7 +84,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
             <p className='text-sm sm:text-base'>Add Your Previous Job Experience</p>
             <form onSubmit={onSubmit}>
                 {
-                    experienceList.map((experience, key) => (
+                    resumeInfo.experiences.map((experience, key) => (
                         <Fragment key={key}>
                             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
                                 <div>
@@ -146,7 +144,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
                                 </Button>
                             </div>
 
-                            {(experienceList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
+                            {(resumeInfo.experiences.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
                         </Fragment>
                     ))
                 }

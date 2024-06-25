@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useId, useState } from 'react'
 import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
@@ -27,27 +27,28 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
   const description = useId()
 
   const [loading, setLoading] = useState(false)
-  const [certificatesList, setCertificatesList] = useState(resumeInfo.certificates)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
-    const newEntries = certificatesList.slice()
+    const newEntries = resumeInfo.certificates.slice()
     newEntries[index][name] = value
-    setCertificatesList(newEntries)
+    resumeInfoDispatch({ action: ResumeActions.CERTIFICATES, payload: { certificates: newEntries } })
     enableNav(false)
-  }, [certificatesList, enableNav])
+  }, [enableNav, resumeInfo.certificates, resumeInfoDispatch])
 
   const handleAddMore = useCallback(() => {
-    setCertificatesList(current => [...current, { ...formField }])
-  }, [])
+    const certificates = resumeInfo.certificates.slice()
+    resumeInfoDispatch({ action: ResumeActions.CERTIFICATES, payload: { certificates: [...certificates, { ...formField }] } })
+  }, [resumeInfo.certificates, resumeInfoDispatch])
 
   const handleRemove = useCallback((index: number) => {
-    setCertificatesList(current => [...current.slice(0, index), ...current.slice(index + 1)])
-  }, [])
+    const certificates = resumeInfo.certificates.slice()
+    resumeInfoDispatch({ action: ResumeActions.CERTIFICATES, payload: { certificates: [...certificates.slice(0, index), ...certificates.slice(index + 1)] } })
+    enableNav(false)
+  }, [resumeInfo.certificates, resumeInfoDispatch, enableNav])
 
   const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-
     try {
       await updateResume({ ...resumeInfo });
       toast.success("Successfully updated education details.")
@@ -59,16 +60,12 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
     }
   }, [resumeInfo, enableNav])
 
-  useEffect(() => {
-    resumeInfoDispatch({ action: ResumeActions.CERTIFICATES, payload: { certificates: certificatesList } })
-  }, [certificatesList, resumeInfoDispatch])
-
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
       <h2 className='text-base font-bold sm:text-lg'>Certificates (Optional)</h2>
       <p className='text-sm sm:text-base'>Add Your Certificates</p>
       <form onSubmit={onSubmit}>
-        {certificatesList.map((certificate, key) => (
+        {resumeInfo.certificates.map((certificate, key) => (
           <Fragment key={key}>
             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
@@ -93,7 +90,7 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
                 <MinusIcon className='h-4 w-4' /> Remove
               </Button>
             </div>
-            {(certificatesList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
+            {(resumeInfo.certificates.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
           </Fragment>
         ))
         }

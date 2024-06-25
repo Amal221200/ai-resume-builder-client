@@ -1,5 +1,5 @@
 "use client"
-import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
+import { FormEvent, Fragment, use, useCallback, useId, useState } from 'react'
 import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
@@ -13,7 +13,7 @@ import { TEducation } from '@/lib/types-sanity';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TEducation = {
-    _type:"education",
+    _type: "education",
     degree: '',
     universityName: '',
     major: '',
@@ -34,22 +34,24 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     const currentlyStuding = useId()
 
     const [loading, setLoading] = useState(false)
-    const [educationList, setEducationList] = useState(resumeInfo.educations)
 
     const handleInput = useCallback((name: string, value: string | boolean, index: number) => {
-        const newEntries = educationList.slice()
+        const newEntries = resumeInfo.educations.slice()
         newEntries[index][name] = value
-        setEducationList(newEntries)
+        resumeInfoDispatch({ action: ResumeActions.EDUCATIONS, payload: { educations: newEntries } })
         enableNav(false)
-    }, [enableNav, educationList])
+    }, [enableNav, resumeInfo.educations, resumeInfoDispatch])
 
     const handleAddMore = useCallback(() => {
-        setEducationList(current => [...current, { ...formField }])
-    }, [])
-
+        const educations = resumeInfo.educations.slice()
+        resumeInfoDispatch({ action: ResumeActions.EDUCATIONS, payload: { educations: [...educations, { ...formField }] } })
+    }, [resumeInfo.educations, resumeInfoDispatch])
+    
     const handleRemove = useCallback((index: number) => {
-        setEducationList(current => [...current.slice(0, index), ...current.slice(index + 1)])
-    }, [])
+        const educations = resumeInfo.educations.slice()
+        resumeInfoDispatch({ action: ResumeActions.EDUCATIONS, payload: { educations: [...educations.slice(0, index), ...educations.slice(index + 1)] } })
+        enableNav(false)
+    }, [resumeInfo.educations, resumeInfoDispatch, enableNav])
 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement | HTMLTextAreaElement>) => {
         e.preventDefault()
@@ -65,17 +67,13 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
         }
     }, [enableNav, resumeInfo])
 
-    useEffect(() => {
-        resumeInfoDispatch({action: ResumeActions.EDUCATIONS, payload: {educations: educationList}})
-    }, [educationList, resumeInfoDispatch])
-
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
             <h2 className='text-base font-bold sm:text-lg'>Education Details (Recommended for freshers)</h2>
             <p className='text-sm sm:text-base'>Add Your Previous Education</p>
             <form onSubmit={onSubmit}>
                 {
-                    educationList.map((education, key) => (
+                    resumeInfo.educations.map((education, key) => (
                         <Fragment key={key}>
                             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
                                 <div className='sm:col-span-2'>
@@ -123,7 +121,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
                                 </Button>
                             </div>
 
-                            {(educationList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
+                            {(resumeInfo.educations.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
                         </Fragment>
                     ))
                 }

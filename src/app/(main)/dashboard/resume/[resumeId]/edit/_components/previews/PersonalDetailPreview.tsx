@@ -13,7 +13,7 @@ const PersonalDetailPreview = ({ }: {}) => {
                 {resumeInfo?.firstName} {resumeInfo?.lastName}
             </h2>
             <h3 className="mb-0 text-center text-[9px] font-medium sm:text-sm">{resumeInfo?.jobTitle}</h3>
-            {resumeInfo.links.length && <LinksPreview />}
+            {!!resumeInfo.links.length && <LinksPreview />}
             <h5 className="text-center text-[8px] font-normal sm:text-xs">{resumeInfo?.address}</h5>
             <div className="flex justify-between">
                 <h6 className="text-[8px] font-normal sm:text-xs">

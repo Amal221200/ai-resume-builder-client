@@ -11,7 +11,7 @@ const LinksPreview = ({ }: {}) => {
         <div className='flex w-full flex-wrap items-center justify-center gap-x-1 text-left'>
           {
             resumeInfo?.links?.map((link, index) => (
-              <a key={index} href={link.url || "#"} target='_blank' className='text-[7px] font-medium sm:text-[9px]'>
+              <a key={index} href={link.url || "#"} target='_blank' className='text-[7px] font-medium sm:text-[10px]'>
                 {link.label}
               </a>
             ))
