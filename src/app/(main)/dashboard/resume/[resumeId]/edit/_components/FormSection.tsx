@@ -1,5 +1,5 @@
 "use client"
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, FileText, HomeIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ import SectionLoading from './SectionLoading';
 import { useParams } from 'next/navigation';
 
 const PersonalDetailForm = dynamic(() => import('./forms/PersonalDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const LinksDetailForm = dynamic(() => import('./forms/LinksDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
 const SummaryDetailForm = dynamic(() => import('./forms/SummaryDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
 const ExperienceDetailForm = dynamic(() => import('./forms/ExperienceDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
 const EducationDetailForm = dynamic(() => import('./forms/EducationDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
@@ -52,7 +53,7 @@ const FormSection = () => {
                             <ArrowLeft />
                         </Button>
                         {
-                            activeForm === 7 ? (
+                            activeForm === 8 ? (
                                 <Button variant={'btn'} size="sm" disabled={!enableNav}>
                                     <Link href={`/dashboard/resume/${resumeId}/view`} className='flex items-center gap-1'>
                                         <FileText size={20} /> View
@@ -73,22 +74,25 @@ const FormSection = () => {
                 activeForm === 1 && <PersonalDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 2 && <SummaryDetailForm enableNav={(val) => setEnableNav(val)} />
+                activeForm === 2 && <LinksDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 3 && <ExperienceDetailForm enableNav={(val) => setEnableNav(val)} />
+                activeForm === 3 && <SummaryDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 4 && <EducationDetailForm enableNav={(val) => setEnableNav(val)} />
+                activeForm === 4 && <ExperienceDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 5 && <SkillsDetailForm enableNav={(val) => setEnableNav(val)} />
+                activeForm === 5 && <EducationDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 6 && <ProjectDetailForm enableNav={(val) => setEnableNav(val)} />
+                activeForm === 6 && <SkillsDetailForm enableNav={(val) => setEnableNav(val)} />
             }
             {
-                activeForm === 7 && <CertificateDetailForm enableNav={(val) => setEnableNav(val)} />
+                activeForm === 7 && <ProjectDetailForm enableNav={(val) => setEnableNav(val)} />
+            }
+            {
+                activeForm === 8 && <CertificateDetailForm enableNav={(val) => setEnableNav(val)} />
             }
         </div>
     )

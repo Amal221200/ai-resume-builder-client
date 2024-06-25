@@ -56,6 +56,7 @@ export async function createResume(title: string): Promise<SanityDocument<TResum
         email: "",
         jobTitle: "",
         summary: "",
+        links: [],
         educations: [],
         experiences: [],
         projects: [],

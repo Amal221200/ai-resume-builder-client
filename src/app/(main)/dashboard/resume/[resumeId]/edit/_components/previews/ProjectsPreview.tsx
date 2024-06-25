@@ -2,7 +2,6 @@
 import { Separator } from '@/components/ui/separator'
 import { use } from 'react';
 import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
-import Link from 'next/link';
 
 const ProjectsPreview = ({ }: {}) => {
   const { resumeInfo } = use(EditResumeContext) as TEditResumeContext;
@@ -19,7 +18,11 @@ const ProjectsPreview = ({ }: {}) => {
             <div className='flex items-center gap-x-1 sm:gap-x-2'>
               <h6 className='text-[9px] font-bold sm:text-sm'>{project.title}</h6>
               {
-               project.link && <Link href={project.link} target='_blank' className='text-[7px] font-medium text-blue-700 sm:text-xs'>Link</Link>
+                project.link && (
+                  <a href={project.link} target='_blank' className='text-[7px] font-medium text-blue-700 sm:text-xs'>
+                    Link
+                  </a>
+                )
               }
             </div>
             <p className='text-[8px] sm:text-[11px]'>{project.stack}</p>

@@ -7,34 +7,36 @@ import { Button } from '@/components/ui/button'
 import { MinusIcon, PlusIcon } from 'lucide-react'
 import LoadingButton from '@/components/buttons/LoadingButton'
 import { Input } from '@/components/ui/input'
-import { TSkill } from '@/lib/types-sanity'
+import { TLink } from '@/lib/types-sanity'
 import { updateResume } from '@/lib/actions/resume-sanity'
 
-const formField: TSkill = {
-  _type: "skill",
-  name: "",
+const formField: TLink = {
+  _type: "link",
+  label: "",
+  url:''
 }
 
-const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
+const LinksDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
-  const name = useId()
+  const label = useId()
+  const url = useId()
 
   const [loading, setLoading] = useState(false)
-  const [skillsList, setSkillsList] = useState(resumeInfo.skills)
+  const [linksList, setLinksList] = useState(resumeInfo.links)
 
   const handleInput = useCallback((name: string, value: string, index: number) => {
-    const newEntries = skillsList.slice()
+    const newEntries = linksList.slice()
     newEntries[index][name] = value
-    setSkillsList(newEntries)
+    setLinksList(newEntries)
     enableNav(false)
-  }, [skillsList, enableNav])
+  }, [linksList, enableNav])
 
   const handleAddMore = useCallback(() => {
-    setSkillsList(current => [...current, { ...formField }])
+    setLinksList(current => [...current, { ...formField }])
   }, [])
 
   const handleRemove = useCallback((index: number) => {
-    setSkillsList(current => [...current.slice(0, index), ...current.slice(index + 1)])
+    setLinksList(current => [...current.slice(0, index), ...current.slice(index + 1)])
   }, [])
 
   const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
@@ -53,20 +55,24 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   }, [resumeInfo, enableNav])
 
   useEffect(() => {
-    resumeInfoDispatch({ action: ResumeActions.SKILLS, payload: { skills: skillsList } })
-  }, [skillsList, resumeInfoDispatch])
+    resumeInfoDispatch({ action: ResumeActions.LINKS, payload: { links: linksList } })
+  }, [linksList, resumeInfoDispatch])
 
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
-      <h2 className='text-base font-bold sm:text-lg'>Skills (Recommended)</h2>
-      <p className='text-sm sm:text-base'>Add Your Skills</p>
+      <h2 className='text-base font-bold sm:text-lg'>Links (Recommended)</h2>
+      <p className='text-sm sm:text-base'>Add Your Links</p>
       <form onSubmit={onSubmit}>
-        {skillsList.map((skill, key) => (
+        {linksList.map((link, key) => (
           <Fragment key={key}>
             <div className='my-5 grid grid-cols-1 gap-3 rounded-lg border p-3 sm:grid-cols-2'>
               <div>
-                <label htmlFor={name} className='text-xs'>Name</label>
-                <Input value={skill.name} required maxLength={13} name='name' id={name} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+                <label htmlFor={label} className='text-xs'>Label</label>
+                <Input value={link.label} required name='label' id={label} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
+              </div>
+              <div>
+                <label htmlFor={url} className='text-xs'>URL</label>
+                <Input value={link.url} type='url' required name='url' id={url} onInput={(e) => handleInput(e.currentTarget.name, e.currentTarget.value, key)} />
               </div>
             </div>
             <div className='my-3 flex justify-end'>
@@ -74,7 +80,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
                 <MinusIcon className='h-4 w-4' /> Remove
               </Button>
             </div>
-            {(skillsList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
+            {(linksList.length !== key + 1) && <Separator className='my-2 h-[1px]' />}
           </Fragment>
         ))
         }
@@ -92,4 +98,4 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   )
 }
 
-export default SkillsDetail
+export default LinksDetail

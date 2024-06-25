@@ -15,6 +15,7 @@ export type TResume = {
     jobTitle?: string,
     summary?: string,
     educations: Array<TEducation>,
+    links: Array<TLink>,
     skills: Array<TSkill>,
     experiences: Array<TExperience>,
     projects: Array<TProject>,
@@ -39,6 +40,14 @@ export type TCertificate = {
     link: string,
     provider: string,
     description: string
+}
+
+export type TLink = {
+    [index: string]: unknown,
+    _type:"link",
+    _key?: string,
+    label: string,
+    url: string,
 }
 
 export type TSkill = {

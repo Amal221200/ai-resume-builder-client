@@ -5,6 +5,7 @@ import { createContext, Dispatch, ReactNode, useMemo, useReducer } from "react"
 export enum ResumeActions {
     PERSONAL_INFO,
     SUMMARY,
+    LINKS,
     EXPERIENCES,
     EDUCATIONS,
     SKILLS,
@@ -37,6 +38,9 @@ const resumeInfoReducer = (state: TResume, { action, payload }: { action: Resume
         return newState
     } else if (action === ResumeActions.EXPERIENCES) {
         newState.experiences = [...payload.experiences]
+        return newState
+    }else if (action === ResumeActions.LINKS) {
+        newState.links = [...payload.links]
         return newState
     } else if (action === ResumeActions.EDUCATIONS) {
         newState.educations = [...payload.educations]
