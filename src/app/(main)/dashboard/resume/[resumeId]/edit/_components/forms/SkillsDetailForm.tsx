@@ -59,7 +59,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
 
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
-      <h2 className='text-base font-bold sm:text-lg'>Skills</h2>
+      <h2 className='text-base font-bold sm:text-lg'>Skills (Recommended)</h2>
       <p className='text-sm sm:text-base'>Add Your Skills</p>
       <form onSubmit={onSubmit}>
         {skillsList.map((skill, key) => (

@@ -82,7 +82,7 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
-            <h2 className='text-base font-bold sm:text-lg'>Professional Experience</h2>
+            <h2 className='text-base font-bold sm:text-lg'>Professional Experience (Not compulsory for freshers)</h2>
             <p className='text-sm sm:text-base'>Add Your Previous Job Experience</p>
             <form onSubmit={onSubmit}>
                 {

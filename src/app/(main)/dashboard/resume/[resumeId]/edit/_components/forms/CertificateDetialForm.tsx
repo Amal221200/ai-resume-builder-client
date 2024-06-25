@@ -65,7 +65,7 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
 
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>
-      <h2 className='text-base font-bold sm:text-lg'>Certificates</h2>
+      <h2 className='text-base font-bold sm:text-lg'>Certificates (Optional)</h2>
       <p className='text-sm sm:text-base'>Add Your Certificates</p>
       <form onSubmit={onSubmit}>
         {certificatesList.map((certificate, key) => (

@@ -71,7 +71,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
-            <h2 className='text-base font-bold sm:text-lg'>Education Details</h2>
+            <h2 className='text-base font-bold sm:text-lg'>Education Details (Recommended for freshers)</h2>
             <p className='text-sm sm:text-base'>Add Your Previous Education</p>
             <form onSubmit={onSubmit}>
                 {

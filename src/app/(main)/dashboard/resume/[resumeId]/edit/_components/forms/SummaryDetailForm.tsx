@@ -47,7 +47,7 @@ const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
-            <h2 className='text-base font-bold sm:text-lg'>Summary Detail</h2>
+            <h2 className='text-base font-bold sm:text-lg'>Summary Detail (Optional)</h2>
             <p className='text-sm sm:text-base'>Tell something about yourself, your passion, and your objective in breif.</p>
             <form onSubmit={onSubmit}>
                 <div className='mt-5'>

@@ -76,8 +76,8 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
 
     return (
         <div className='extra-small mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
-            <h2 className='text-base font-bold sm:text-lg'>Projects</h2>
-            <p className='text-sm sm:text-base'>Add a few projects to show your achievements</p>
+            <h2 className='text-base font-bold sm:text-lg'>Projects (Optional, Recommended for freshers)</h2>
+            <p className='text-sm sm:text-base'>Add a few projects to show your achievements.</p>
             <form onSubmit={onSubmit}>
                 {
                     projectsList.map((project, key) => (
