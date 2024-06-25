@@ -2,8 +2,9 @@
 import { Separator } from "@/components/ui/separator"
 import { use } from "react";
 import { EditResumeContext, TEditResumeContext } from "../../../_components/providers/EditResumeProvider";
+import Link from "next/link";
 
-const PersonalDetailPreview = ({  }: {  }) => {
+const PersonalDetailPreview = ({ }: {}) => {
     const { resumeInfo } = use(EditResumeContext) as TEditResumeContext;
 
     return (
@@ -14,10 +15,14 @@ const PersonalDetailPreview = ({  }: {  }) => {
             <h3 className="text-center text-[9px] font-medium sm:text-sm">{resumeInfo?.jobTitle}</h3>
             <h5 className="text-center text-[8px] font-normal sm:text-xs">{resumeInfo?.address}</h5>
             <div className="flex justify-between">
-                <h6 className="text-[8px] font-normal sm:text-xs">{resumeInfo?.phone}</h6>
-                <h6 className="text-[8px] font-normal sm:text-xs">{resumeInfo?.email}</h6>
+                <h6 className="text-[8px] font-normal sm:text-xs">
+                    <Link target="_blank" href={`tel:${resumeInfo.phone}`}>{resumeInfo.phone}</Link>
+                </h6>
+                <h6 className="text-[8px] font-normal sm:text-xs">
+                    <Link target="_blank" href={`mailto:${resumeInfo.email}`}>{resumeInfo.email}</Link>
+                </h6>
             </div>
-            <Separator className="my-2 h-[1.5px]" style={{ backgroundColor: "#222" }}  />
+            <Separator className="my-2 h-[1.5px]" style={{ backgroundColor: "#222" }} />
         </div>
     )
 }

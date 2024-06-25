@@ -1,11 +1,10 @@
 "use client";
-
-import { Input } from '@/components/ui/input';
-import React, { FormEvent, use, useCallback, useId, useState } from 'react'
+import { FormEvent, use, useCallback, useId, useState } from 'react'
+import { updateResume } from '@/lib/actions/resume-sanity';
 import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
+import { Input } from '@/components/ui/input';
 import LoadingButton from '@/components/buttons/LoadingButton';
-import { updateResume } from '@/lib/actions/resume-sanity';
 
 const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
