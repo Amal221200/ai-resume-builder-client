@@ -14,7 +14,7 @@ const SkillsPreview = ({ }: {}) => {
       <div className='my-3 w-full'>
         <ul className='grid w-full list-inside list-disc grid-cols-5 justify-center gap-y-2 text-left sm:grid-cols-[repeat(5,120px)]'>
           {
-            resumeInfo?.skills?.map((skill, index) => (<li key={index} className='mx-2 text-[5px] sm:text-[11px]'> {skill.name}</li>))
+            resumeInfo?.skills?.map((skill, index) => (<li key={index} className='mx-2 text-[7px] sm:text-[11px]'> {skill.name}</li>))
           }
         </ul>
       </div>
