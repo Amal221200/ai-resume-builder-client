@@ -8,13 +8,13 @@ import Link from 'next/link';
 import SectionLoading from './SectionLoading';
 import { useParams } from 'next/navigation';
 
-const PersonalDetailForm = dynamic(() => import('./forms/PersonalDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
-const SummaryDetailForm = dynamic(() => import('./forms/SummaryDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
-const ExperienceDetailForm = dynamic(() => import('./forms/ExperienceDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
-const EducationDetailForm = dynamic(() => import('./forms/EducationDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
-const SkillsDetailForm = dynamic(() => import('./forms/SkillsDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
-const ProjectDetailForm = dynamic(() => import('./forms/ProjectDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
-const CertificateDetailForm = dynamic(() => import('./forms/CertificateDetialForm'), { ssr: true, loading: () => <SectionLoading marginTop /> });
+const PersonalDetailForm = dynamic(() => import('./forms/PersonalDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const SummaryDetailForm = dynamic(() => import('./forms/SummaryDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const ExperienceDetailForm = dynamic(() => import('./forms/ExperienceDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const EducationDetailForm = dynamic(() => import('./forms/EducationDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const SkillsDetailForm = dynamic(() => import('./forms/SkillsDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const ProjectDetailForm = dynamic(() => import('./forms/ProjectDetailForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
+const CertificateDetailForm = dynamic(() => import('./forms/CertificateDetialForm'), { ssr: true, loading: () => <SectionLoading marginTop borderTop /> });
 
 const FormSection = () => {
     const { resumeId } = useParams()

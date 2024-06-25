@@ -1,6 +1,6 @@
 "use client"
 import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -12,7 +12,7 @@ import { updateResume } from '@/lib/actions/resume-sanity'
 import { TCertificate } from '@/lib/types-sanity'
 
 const formField: TCertificate = {
-  _type:"certificate",
+  _type: "certificate",
   title: "",
   link: "",
   provider: "",
@@ -20,7 +20,7 @@ const formField: TCertificate = {
 }
 
 const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-  const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+  const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
   const title = useId()
   const link = useId()
   const provider = useId()
@@ -60,8 +60,8 @@ const CertificatesDetail = ({ enableNav }: { enableNav: (val: boolean) => void }
   }, [resumeInfo, enableNav])
 
   useEffect(() => {
-    setResumeInfo(current => ({ ...current, certificates: certificatesList }))
-  }, [certificatesList, setResumeInfo])
+    resumeInfoDispatch({ action: ResumeActions.CERTIFICATES, payload: { certificates: certificatesList } })
+  }, [certificatesList, resumeInfoDispatch])
 
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-5 shadow-lg'>

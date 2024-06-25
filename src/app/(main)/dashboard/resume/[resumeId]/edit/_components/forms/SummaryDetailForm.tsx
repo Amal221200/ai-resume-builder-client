@@ -1,6 +1,6 @@
 "use client";
 import React, { ChangeEvent, FormEvent, use, useCallback, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Textarea } from '@/components/ui/textarea';
 import AIButton from '@/components/buttons/AIButton';
@@ -11,7 +11,7 @@ import { updateResume } from '@/lib/actions/resume-sanity';
 const PROMPT = `Job Title: {jobTitle}, Depends on job title give me list of  ATS friendly summary for 3 experience level:- Senior Level, Mid Level and Freasher level in 3-4 lines in array format, with summary and experience_level Field in JSON Format`
 
 const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+    const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
     const summary = useId()
 
     const [loading, setLoading] = useState(false)
@@ -20,9 +20,9 @@ const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
 
 
     const handleInput = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-        setResumeInfo({ ...resumeInfo, [e.currentTarget.name]: e.currentTarget.value })
+        resumeInfoDispatch({ action: ResumeActions.SUMMARY, payload: { ...resumeInfo, [e.currentTarget.name]: e.currentTarget.value } })
         enableNav(false)
-    }, [resumeInfo, setResumeInfo, enableNav])
+    }, [resumeInfo, resumeInfoDispatch, enableNav])
 
     const onGenerateAISummary = useCallback(async () => {
         setGenerating(true)
@@ -74,7 +74,7 @@ const SummaryDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
                     {aiGeneratedSummaryList?.map((item, index) => (
                         <div key={index}
                             onClick={() => {
-                                setResumeInfo({ ...resumeInfo, summary: item?.summary })
+                                resumeInfoDispatch({ action: ResumeActions.SUMMARY, payload: { summary: item?.summary } })
                                 setAiGeneratedSummaryList([])
                             }}
                             className='my-4 cursor-pointer rounded-lg p-5 shadow-lg transition-all hover:bg-foreground/10'>

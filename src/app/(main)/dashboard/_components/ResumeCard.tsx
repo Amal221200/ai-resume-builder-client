@@ -14,7 +14,7 @@ const ResumeCard = ({ resume }: { resume: TResume }) => {
                     <Image src="/cv.png" alt='cv' width={50} height={55} />
                 </div>
             </Link>
-            <div className='flex justify-between rounded-b-lg border p-3 text-neutral-300' style={{ backgroundColor: resume.themeColor }}>
+            <div className='flex justify-between rounded-b-lg border bg-[#222] p-3 text-neutral-300'>
                 <h3 className='my-1 text-center'>{resume.title}</h3>
                 <ResumeCardDropdownMenu resumeId={resume._id}>
                     <MoreVertical className='cursor-pointer' />

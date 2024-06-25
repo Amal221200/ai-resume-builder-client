@@ -1,6 +1,6 @@
 "use client"
 import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ const formField: TEducation = {
 }
 
 const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+    const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
     const degree = useId()
     const major = useId()
     const universityName = useId()
@@ -66,8 +66,8 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
     }, [enableNav, resumeInfo])
 
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, educations: educationList }))
-    }, [educationList, setResumeInfo])
+        resumeInfoDispatch({action: ResumeActions.EDUCATIONS, payload: {educations: educationList}})
+    }, [educationList, resumeInfoDispatch])
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>

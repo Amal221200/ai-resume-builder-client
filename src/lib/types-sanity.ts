@@ -2,7 +2,6 @@ export type TResume = {
     _type: "resume",
     _id: string,
     title: string,
-    themeColor?: string,
     user_email: string,
     username: string,
     createdAt?: string,

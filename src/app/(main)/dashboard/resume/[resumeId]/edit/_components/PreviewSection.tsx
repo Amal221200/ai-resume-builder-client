@@ -16,8 +16,7 @@ const PreviewSection = ({ className, scrollable }: { className?: string, scrolla
 
     return (
         <div>
-            <div className={cn("border-t-[20px] bg-white sm:p-14 p-3 text-black shadow-lg print-remove-shadow", scrollable && "no-scrollbar h-[85vh] overflow-auto", className)}
-                style={{ borderColor: resumeInfo?.themeColor }}>
+            <div className={cn("border-t-[20px] bg-white sm:p-14 p-3 text-black shadow-lg print-remove-shadow", scrollable && "no-scrollbar h-[85vh] overflow-auto", className)}>
                 {resumeInfo.firstName && <PersonalDetailPreview />}
                 {resumeInfo.summary && <SummaryPreview />}
                 {!!resumeInfo.experiences?.length && <ExperiencePreview />}

@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, Fragment, use, useCallback, useEffect, useId, useMemo, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ import { TExperience } from '@/lib/types-sanity';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TExperience = {
-    _type:"experience",
+    _type: "experience",
     title: '',
     companyName: '',
     city: '',
@@ -30,7 +30,7 @@ const formField: TExperience = {
 const PROMPT = 'position titile: {title}, experience: {experience}, skills: {skills}, depends on position title, skills, and given experience, give me 5-7 ATS friendly bullet points for my experience in resume (Please do not add experince level and No JSON array), give me result in HTML unordered list.'
 
 const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+    const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
     const title = useId()
     const companyName = useId()
     const city = useId()
@@ -77,8 +77,8 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
     const finalPrompt = useCallback((experience: TExperience) => PROMPT.replace('{title}', experience.title).replace('{experience}', totalExperience(experience)).replace('{skills}', experience.skills), [totalExperience])
 
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, experiences: experienceList }))
-    }, [experienceList, setResumeInfo])
+        resumeInfoDispatch({ action: ResumeActions.EXPERIENCES, payload: { experiences: experienceList } })
+    }, [experienceList, resumeInfoDispatch])
 
     return (
         <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>

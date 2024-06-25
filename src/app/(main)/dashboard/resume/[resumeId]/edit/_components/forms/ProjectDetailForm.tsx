@@ -1,6 +1,6 @@
 "use client"
 import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -12,7 +12,7 @@ import { TProject } from '@/lib/types-sanity';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
 const formField: TProject = {
-    _type:"project",
+    _type: "project",
     title: '',
     stack: '',
     link: '',
@@ -22,7 +22,7 @@ const formField: TProject = {
 const PROMPT = "Write a few line of  ATS friendly description about a project of title : {title}, developed by implementing the following {stack}. The lines should be in the form of HTML unordered list."
 
 const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+    const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
     const title = useId()
     const link = useId()
     const stack = useId()
@@ -38,14 +38,9 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
         enableNav(false)
     }, [enableNav, projectsList])
 
-    console.log(projectsList[0]);
-
-
     const handleDescription = useCallback((name: string, value: string, index: number) => {
         const newEntries = projectsList.slice()
         newEntries[index][name] = value
-        console.log(newEntries[index]);
-
         setProjectsList(newEntries)
         enableNav(false)
     }, [enableNav, projectsList])
@@ -72,13 +67,12 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
         }
     }, [enableNav, resumeInfo])
 
-    // const totalExperience = useCallback((experience: TEducation) => getExperience(new Date(experience.startDate), experience.currentlyWorking ? new Date() : new Date(experience.endDate)), [])
     const enableAI = useCallback((project: TProject) => !!(project.title && project.stack), [])
     const finalPrompt = useCallback((project: TProject) => PROMPT?.replace("{title}", project.title)?.replace("{stack}", project.stack), [])
 
     useEffect(() => {
-        setResumeInfo(current => ({ ...current, projects: projectsList }))
-    }, [projectsList, setResumeInfo])
+        resumeInfoDispatch({ action: ResumeActions.PROJECTS, payload: { projects: projectsList } })
+    }, [projectsList, resumeInfoDispatch])
 
     return (
         <div className='extra-small mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>

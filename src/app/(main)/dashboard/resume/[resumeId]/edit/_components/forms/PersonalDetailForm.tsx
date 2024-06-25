@@ -2,17 +2,29 @@
 
 import { Input } from '@/components/ui/input';
 import React, { FormEvent, use, useCallback, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider';
 import { toast } from 'sonner';
 import LoadingButton from '@/components/buttons/LoadingButton';
 import { updateResume } from '@/lib/actions/resume-sanity';
 
 const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-    const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
-    const handleInput = (e: FormEvent<HTMLInputElement>) => {
-        setResumeInfo({ ...resumeInfo, [e.currentTarget.name]: e.currentTarget.value })
+    const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
+    const handleInput = useCallback((e: FormEvent<HTMLInputElement>) => {
+        const newPersonalData = {
+            firstName: resumeInfo.firstName,
+            lastName: resumeInfo.lastName,
+            email: resumeInfo.email,
+            phone: resumeInfo.phone,
+            address: resumeInfo.address,
+            jobTitle: resumeInfo.jobTitle
+        }
+        
+        resumeInfoDispatch({
+            action: ResumeActions.PERSONAL_INFO,
+            payload: { ...newPersonalData, [e.currentTarget.name]: e.currentTarget.value }
+        })
         enableNav(false)
-    }
+    }, [enableNav, resumeInfoDispatch, resumeInfo])
 
     const [loading, setLoading] = useState(false)
 

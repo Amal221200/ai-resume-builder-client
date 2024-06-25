@@ -1,7 +1,7 @@
 "use client"
 
 import { FormEvent, Fragment, use, useCallback, useEffect, useId, useState } from 'react'
-import { EditResumeContext, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
+import { EditResumeContext, ResumeActions, TEditResumeContext } from '../../../_components/providers/EditResumeProvider'
 import { toast } from 'sonner'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
@@ -12,12 +12,12 @@ import { TSkill } from '@/lib/types-sanity'
 import { updateResume } from '@/lib/actions/resume-sanity'
 
 const formField: TSkill = {
-  _type:"skill",
+  _type: "skill",
   name: "",
 }
 
 const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
-  const { resumeInfo, setResumeInfo } = use(EditResumeContext) as TEditResumeContext;
+  const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;
   const name = useId()
 
   const [loading, setLoading] = useState(false)
@@ -43,7 +43,7 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     setLoading(true)
 
     try {
-      await updateResume({ ...resumeInfo});
+      await updateResume({ ...resumeInfo });
       toast.success("Successfully updated education details.")
     } catch (error) {
       toast.error("Error updating education details.")
@@ -54,8 +54,8 @@ const SkillsDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   }, [resumeInfo, enableNav])
 
   useEffect(() => {
-    setResumeInfo(current => ({ ...current, skills: skillsList }))
-  }, [skillsList, setResumeInfo])
+    resumeInfoDispatch({ action: ResumeActions.SKILLS, payload: { skills: skillsList } })
+  }, [skillsList, resumeInfoDispatch])
 
   return (
     <div className='mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
