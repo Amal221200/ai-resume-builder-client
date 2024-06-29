@@ -16,7 +16,7 @@ export async function getResumes(): Promise<TResume[]> {
 
     const email = user.emailAddresses[0].emailAddress
     const response = await sanity.fetch<TResume[]>(`*[_type=="resume" && (user_email==$email || email=="johndoe@example.com")]`, { email }, {
-        cache: "force-cache"
+        cache: "no-store"
     })
 
     return response
@@ -64,7 +64,6 @@ export async function createResume(title: string): Promise<SanityDocument<TResum
         certificates: []
     }
     const response = await sanity.create<TResume>(data)
-    revalidatePath('/dashboard')
     return response
 }
 
@@ -78,7 +77,6 @@ export async function updateResume(resume: TResume): Promise<TResume> {
     const { _id, ...data } = resume
     const response = await sanity.patch(_id).set({ ...data }).commit<TResume>()
 
-    revalidatePath(`/dashboard/resume/${resume._id}`)
     return response
 }
 
@@ -90,6 +88,5 @@ export async function deleteResume(resumeId: string): Promise<SanityDocument<TRe
     }
 
     const response = await sanity.delete<TResume>(resumeId)
-    revalidatePath('/dashboard')
     return response
 }

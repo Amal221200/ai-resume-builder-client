@@ -37,6 +37,7 @@ const AddResume = () => {
         try {
             setLoading(true)
             const response = await createResume(resumeTitle)
+            router.refresh()
             router.push(`/dashboard/resume/${response?._id}/edit`)
             toast.success('Successfully created')
         } catch (error) {

@@ -21,6 +21,7 @@ const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, r
         try {
             setLoading(true)
             await deleteResume(resumeId)
+            router.refresh()
             toast.success("Successfully deleted")
         } catch (error) {
             toast.error("Failed to deleted")
@@ -28,7 +29,7 @@ const ResumeCardDropdownMenu = ({ children, resumeId }: { children: ReactNode, r
             setLoading(false)
             setOpen(false)
         }
-    }, [resumeId])
+    }, [resumeId, router])
 
 
 
