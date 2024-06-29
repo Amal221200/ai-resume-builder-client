@@ -63,6 +63,12 @@ const ExperienceDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void
         e.preventDefault()
         setLoading(true)
         try {
+            if (resumeInfo.user_email === 'johndoe@example.com') {
+                toast.warning("This is an example resume for showcase. You can create your own resume to change the data.", {
+                    position: 'top-center'
+                })
+                return
+            }
             await updateResume({ ...resumeInfo });
             toast.success("Successfully updated experience details.")
         } catch (error) {

@@ -38,18 +38,24 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
 
     const handleAddMore = useCallback(() => {
         const projects = resumeInfo.projects.slice()
-        resumeInfoDispatch({ action: ResumeActions.PROJECTS, payload: { projects:  [...projects, { ...formField }] } })
+        resumeInfoDispatch({ action: ResumeActions.PROJECTS, payload: { projects: [...projects, { ...formField }] } })
     }, [resumeInfo.projects, resumeInfoDispatch])
 
     const handleRemove = useCallback((index: number) => {
         const projects = resumeInfo.projects.slice()
-        resumeInfoDispatch({ action: ResumeActions.PROJECTS, payload: { projects:  [...projects.slice(0, index), ...projects.slice(index + 1)] } })
+        resumeInfoDispatch({ action: ResumeActions.PROJECTS, payload: { projects: [...projects.slice(0, index), ...projects.slice(index + 1)] } })
     }, [resumeInfo.projects, resumeInfoDispatch])
 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
         try {
+            if (resumeInfo.user_email === 'johndoe@example.com') {
+                toast.warning("This is an example resume for showcase. You can create your own resume to change the data.", {
+                    position: 'top-center'
+                })
+                return
+            }
             await updateResume({ ...resumeInfo });
             toast.success("Successfully updated experience details.")
         } catch (error) {
@@ -62,7 +68,7 @@ const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void })
 
     const enableAI = useCallback((project: TProject) => !!(project.title && project.stack), [])
     const finalPrompt = useCallback((project: TProject) => PROMPT?.replace("{title}", project.title)?.replace("{stack}", project.stack), [])
-    
+
     return (
         <div className='extra-small mt-10 rounded-lg border-t-4 border-t-primary-btn p-2 shadow-lg sm:p-5'>
             <h2 className='text-base font-bold sm:text-lg'>Projects (Optional, Recommended for freshers)</h2>

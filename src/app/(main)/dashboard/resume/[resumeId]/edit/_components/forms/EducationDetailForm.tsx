@@ -46,7 +46,7 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
         const educations = resumeInfo.educations.slice()
         resumeInfoDispatch({ action: ResumeActions.EDUCATIONS, payload: { educations: [...educations, { ...formField }] } })
     }, [resumeInfo.educations, resumeInfoDispatch])
-    
+
     const handleRemove = useCallback((index: number) => {
         const educations = resumeInfo.educations.slice()
         resumeInfoDispatch({ action: ResumeActions.EDUCATIONS, payload: { educations: [...educations.slice(0, index), ...educations.slice(index + 1)] } })
@@ -57,6 +57,12 @@ const EducationDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void 
         e.preventDefault()
         setLoading(true)
         try {
+            if (resumeInfo.user_email === 'johndoe@example.com') {
+                toast.warning("This is an example resume for showcase. You can create your own resume to change the data.", {
+                    position: 'top-center'
+                })
+                return
+            }
             await updateResume({ ...resumeInfo });
             toast.success("Successfully updated education details.")
         } catch (error) {

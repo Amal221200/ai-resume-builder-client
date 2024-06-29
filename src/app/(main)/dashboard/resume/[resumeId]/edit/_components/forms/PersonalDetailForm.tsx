@@ -17,7 +17,7 @@ const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }
             address: resumeInfo.address,
             jobTitle: resumeInfo.jobTitle
         }
-        
+
         resumeInfoDispatch({
             action: ResumeActions.PERSONAL_INFO,
             payload: { ...newPersonalData, [e.currentTarget.name]: e.currentTarget.value }
@@ -35,9 +35,16 @@ const PersonalDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }
     const email = useId()
 
     const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
+
         try {
-            e.preventDefault()
-            setLoading(true)
+            if (resumeInfo.user_email === 'johndoe@example.com') {
+                toast.warning("This is an example resume for showcase. You can create your own resume to change the data.", {
+                    position: 'top-center'
+                })
+                return
+            }
             await updateResume(resumeInfo);
             toast.success("Successfully updated personal information.")
         } catch (error) {

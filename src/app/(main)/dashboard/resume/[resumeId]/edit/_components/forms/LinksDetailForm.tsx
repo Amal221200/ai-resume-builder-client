@@ -44,8 +44,13 @@ const LinksDetail = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
   const onSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
-
     try {
+      if (resumeInfo.user_email === 'johndoe@example.com') {
+        toast.warning("This is an example resume for showcase. You can create your own resume to change the data.", {
+          position: 'top-center'
+        })
+        return
+      }
       await updateResume({ ...resumeInfo });
       toast.success("Successfully updated education details.")
     } catch (error) {
