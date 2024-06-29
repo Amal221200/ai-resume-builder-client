@@ -19,7 +19,7 @@ const formField: TProject = {
     description: ''
 }
 
-const PROMPT = "Write a few line of  ATS friendly description about a project of title : {title}, developed by implementing the following {stack}. The lines should be in the form of HTML unordered list."
+const PROMPT = "Write a 5-7 ATS friendly bullet points about a project of title : {title}, developed by implementing the following {stack}. The lines should be in the form of HTML unordered list."
 
 const ProjectDetailForm = ({ enableNav }: { enableNav: (val: boolean) => void }) => {
     const { resumeInfo, resumeInfoDispatch } = use(EditResumeContext) as TEditResumeContext;

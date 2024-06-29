@@ -15,7 +15,7 @@ export async function getResumes(): Promise<TResume[]> {
     }
 
     const email = user.emailAddresses[0].emailAddress
-    const response = await sanity.fetch<TResume[]>(`*[_type=="resume" && user_email==$email]`, { email }, {
+    const response = await sanity.fetch<TResume[]>(`*[_type=="resume" && (user_email==$email || email=="johndoe@example.com")]`, { email }, {
         cache: "force-cache"
     })
 

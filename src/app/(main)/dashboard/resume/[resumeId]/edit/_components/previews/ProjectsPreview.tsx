@@ -20,7 +20,7 @@ const ProjectsPreview = ({ }: {}) => {
               {
                 project.link && (
                   <a href={project.link} target='_blank' className='text-[7px] font-medium text-blue-700 sm:text-xs'>
-                    Link
+                    Visit
                   </a>
                 )
               }
